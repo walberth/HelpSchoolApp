@@ -3,7 +3,7 @@ package com.moviles.utp.helpschoolapp;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+public class ReplyRequestActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

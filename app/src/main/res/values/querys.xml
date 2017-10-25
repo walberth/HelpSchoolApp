@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="querys_array">
+        <item>Justificacion de Inasistencia</item>
+        <item>Certificado de Estudio</item>
+    </string-array>
+
+    <string-array name="number_array">
+        <item>Solicitud 1</item>
+        <item>Solicitud 2</item>
+        <item>Solicitud 3</item>
+        <item>Solicitud 4</item>
+        <item>Solicitud 5</item>
+        <item>Solicitud 6</item>
+    </string-array>
+</resources>

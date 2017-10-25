@@ -1,0 +1,19 @@
+com.moviles.utp.helpschoolapp --> root package
+      data --> data package, it contains model class and  api client
+            model --> model package, it contains bean class related with object returned by api client
+                  UserResponse --> bean class related with login parameters retuned by api client
+            storage --> storage package, it contains classes related with api client
+                  ApiClient --> java class related with methods and variables of api client (communication with ws)
+      helper --> helper pachake, it contains files related with animations for components,
+                         methods to manipulate objects, among others
+            HelperTest --> basic java class created only for representing a class inside helper package
+      model --> model package, it contains bean class related with transactional tables
+            User --> bean class related with login parameters
+      ui --> ui package, it contains packages related with manipulate ui components and fill data
+            adapter --> adapter package, it contains classes and interfaces related with ui components and fill data from api client.
+                               For instance, RecyclerView, CardView, among others
+                  AdapterTest --> basic java class created only for representing a class inside adapter package
+            fragment --> fragment package, it contains java classes extending from fragment class with methods to build the fragment
+                  FragmentTest --> basic java class created only for representing a class inside fragment package
+      MainActivity --> activity class, it contains main methods and manipulate fragments interaction, among others.
+      [All Activities will be in root package]

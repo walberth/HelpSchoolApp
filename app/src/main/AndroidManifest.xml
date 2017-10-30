@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.moviles.utp.helpschoolapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/helpdesk_school_black"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/helpdesk_school_black_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppThemeOfficial">
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeOfficial.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -16,10 +23,11 @@
         </activity>
         <activity android:name=".ResponseActivity" />
         <activity android:name=".PendingResponseActivity" />
-        <activity android:name=".ReplyRequestActivity"></activity>
+        <activity android:name=".ReplyRequestActivity" />
         <activity
             android:name=".ListRequestActivity"
             android:label="@string/title_activity_list_request" />
-        <activity android:name=".SelectRequestActivity"></activity>
+        <activity android:name=".SelectRequestActivity" />
     </application>
+
 </manifest>

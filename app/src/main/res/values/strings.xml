@@ -1,7 +1,17 @@
 <resources>
-    <string name="app_name">HelpSchoolApp</string>
+    <!-- General -->
+    <string name="app_name">Help School</string>
+    <!-- Module Login -->
+    <string name="login_field_username">Usuario</string>
+    <string name="login_field_password">Contraseña</string>
+    <string name="login_button">Iniciar Sesión</string>
+
+
+
+    <!-- Validar -->
     <string name="title_activity_list_request">ListRequestActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
 </resources>

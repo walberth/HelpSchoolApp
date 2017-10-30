@@ -1,8 +1,40 @@
 <resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <!-- Official Style for App theme -->
+    <style name="AppThemeOfficial" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+    </style>
+    <!-- Style for Action Bar, having Official Style for App theme -->
+    <style name="AppThemeOfficial.ActionBar" parent="AppThemeOfficial">
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
+    </style>
+    <!-- Field Text Style for Common EditText -->
+    <style name="FieldTextNormal" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorTextSecondary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+    <!-- Field Text Style for Common Attribute Hint in EditText -->
+    <style name="FieldHintTextNormal" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+    <!-- Field Text Error Style for Common Attribute Hint in EditText -->
+    <style name="FieldErrorTextNormal" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorError</item>
     </style>
 
+
+
+    <!-- Optional Base application theme. -->
+    <!--<style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+
+    </style>-->
 </resources>

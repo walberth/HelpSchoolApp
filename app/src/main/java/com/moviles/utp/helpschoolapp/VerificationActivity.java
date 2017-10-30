@@ -21,7 +21,7 @@ public class VerificationActivity extends Activity implements View.OnClickListen
         Bundle extras = getIntent().getExtras();
         String s = extras.getString("usuario").toString();
         TextView txtResultado;
-        txtResultado = (TextView)findViewById(R.id.txtUser);
+        txtResultado = (TextView)findViewById(R.id.username);
         txtResultado.setText("Hola " + s + " ,¿Aceptas las condiciones?");
     }
 

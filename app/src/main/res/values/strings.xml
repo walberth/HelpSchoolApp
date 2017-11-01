@@ -7,11 +7,11 @@
     <string name="login_button">Iniciar Sesión</string>
 
 
-
     <!-- Validar -->
     <string name="title_activity_list_request">ListRequestActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

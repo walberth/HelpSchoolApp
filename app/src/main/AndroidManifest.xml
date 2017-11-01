@@ -18,6 +18,7 @@
             android:theme="@style/AppThemeOfficial.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,6 +29,16 @@
             android:name=".ListRequestActivity"
             android:label="@string/title_activity_list_request" />
         <activity android:name=".SelectRequestActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
     </application>
 
 </manifest>

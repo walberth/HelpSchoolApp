@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         jsonResponse.optString("perfil"));
                 if(user.getId() != 0) {
                     dialog.dismiss();
-                    startActivity(new Intent(LoginActivity.this, SelectRequestActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
                     dialog.dismiss();
                     AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();

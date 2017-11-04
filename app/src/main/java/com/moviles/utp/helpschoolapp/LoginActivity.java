@@ -8,13 +8,12 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
+import com.moviles.utp.helpschoolapp.data.storage.UserSessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +24,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
@@ -121,9 +119,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         jsonResponse.optString("motherLastname"),
                         jsonResponse.optString("email"),
                         jsonResponse.optString("perfil"));
-                if(user.getId() != 0) {
+                if (user.getId() != 0) {
                     dialog.dismiss();
                     startActivity(new Intent(LoginActivity.this, ContainerActivity.class));
+                    new UserSessionManager(getApplicationContext(), user);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
                 } else {
                     dialog.dismiss();
                     AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
@@ -136,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             });
                     alertDialog.show();
                 }
-            } catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }

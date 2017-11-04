@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/profile"
+        title="@string/title_profile"
+        barColorWhenSelected ="@color/colorPrimary"
+        icon="@drawable/profile"/>
+    <tab
+        id="@+id/do_request"
+        title="@string/title_do_request"
+        barColorWhenSelected ="@color/colorPrimary"
+        icon="@drawable/request"/>
+    <tab
+        id="@+id/requests"
+        title="@string/title_list_request"
+        barColorWhenSelected ="@color/colorPrimary"
+        icon="@drawable/listrequest"/>
+    <tab
+        id="@+id/historical"
+        title="@string/title_historical"
+        barColorWhenSelected ="@color/colorPrimary"
+        icon="@drawable/historical"/>
+
+</tabs>

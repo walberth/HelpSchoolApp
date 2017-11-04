@@ -25,6 +25,9 @@
         <item name="android:textColor">@color/colorError</item>
     </style>
 
+    <style name="AppThemeOfficial.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppThemeOfficial.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
     <!-- Optional Base application theme. -->

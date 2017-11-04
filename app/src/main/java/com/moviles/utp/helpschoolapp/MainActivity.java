@@ -3,6 +3,7 @@ package com.moviles.utp.helpschoolapp;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_dashboard:
                 pushFragment(new ListRequestFragment());
+                //TODO: SE LLAMA AL OTRO ACTIVITY
+                startActivity(new Intent(MainActivity.this, PendingResponseActivity.class));
                 break;
             case R.id.action_notifications:
                 pushFragment(new PendingResponseFragment());

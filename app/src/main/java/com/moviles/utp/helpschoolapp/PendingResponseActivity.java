@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
@@ -23,17 +24,21 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 
 public class PendingResponseActivity extends Activity {
+    private static final String TAG = "PendingResponseActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequest/";
     //TODO: PENDIENTE DE CREAR ACCIONES ACÁ
     private String username = "GUSTAVO.RAMOS";
+    private String type = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_response);
+
+        new GetPendingResponse().execute(username, type);
     }
 
-    private class LoginAction extends AsyncTask<String, Void, Void> {
+    private class GetPendingResponse extends AsyncTask<String, Void, Void> {
         private ProgressDialog dialog = new ProgressDialog(PendingResponseActivity.this);
         private String content;
         private PendingRequestResponse pendingRequestResponse;
@@ -67,6 +72,8 @@ public class PendingResponseActivity extends Activity {
                         jsonResponse.optString("statusRequest"),
                         jsonResponse.optString("timeStampCReq")
                 );
+
+                Log.d(TAG, jsonResponse.toString());
 
 
                 if(pendingRequestResponse.getIdRequest() != 0){

@@ -11,4 +11,5 @@
     <color name="colorWhite2">#FFFDFD</color>
     <color name="colorError">#BF3813</color>
     <color name="colorWhiteSmoke">#F5F5F5</color>
+    <color name="backgroundText">#8a262020</color>
 </resources>

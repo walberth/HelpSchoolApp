@@ -1,18 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_request"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:background="@color/colorWhiteSmoke"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.moviles.utp.helpschoolapp.ui.fragment.ListRequestFragment">
 
-    <TextView
-        android:id="@+id/frSelReq"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="List Request"/>
+    <LinearLayout
+        android:layout_width="383dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_horizontal_margin"
+        android:paddingRight="@dimen/padding_horizontal_margin"
+        android:paddingTop="@dimen/padding_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</LinearLayout>
+        <include layout="@layout/cardview_pending_response" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

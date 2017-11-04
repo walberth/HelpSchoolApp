@@ -121,9 +121,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         jsonResponse.optString("perfil"));
                 if (user.getId() != 0) {
                     dialog.dismiss();
-                    startActivity(new Intent(LoginActivity.this, ContainerActivity.class));
                     new UserSessionManager(getApplicationContext(), user);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ContainerActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

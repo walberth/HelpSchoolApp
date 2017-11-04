@@ -10,7 +10,7 @@
     <!-- Validar -->
     <string name="title_activity_list_request">ListRequestActivity</string>
     <string name="title_profile">Perfil</string>
-    <string name="title_do_request">Solicitudes</string>
+    <string name="title_do_request">Consultar</string>
     <string name="title_list_request">General</string>
     <string name="title_historical">Historial</string>
     <string name="title_main">Login</string>

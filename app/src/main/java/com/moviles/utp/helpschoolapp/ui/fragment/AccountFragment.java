@@ -13,10 +13,10 @@ import com.moviles.utp.helpschoolapp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListRequestFragment extends Fragment {
+public class AccountFragment extends Fragment {
 
 
-    public ListRequestFragment() {
+    public AccountFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class ListRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_request, container, false);
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
 
 }

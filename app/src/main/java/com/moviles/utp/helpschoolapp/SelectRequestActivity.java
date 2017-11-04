@@ -37,7 +37,7 @@ public class SelectRequestActivity extends Activity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
+/*
         if (view == send) {
             text.setText("");
             text.requestFocus();
@@ -52,9 +52,9 @@ public class SelectRequestActivity extends Activity implements View.OnClickListe
             intent.putExtras(objBundle);
             startActivity(intent);
         }
+*/
 
-
-        //intent.putExtra("name", txtName.getText().toString());
+        // /intent.putExtra("name", txtName.getText().toString());
 
     }
 }

@@ -22,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setupNavigationView();
+        //setupNavigationView();
+
+        BottomNavigationView bottomNavigationView= (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setSelectedItemId(R.id.select_request);
         //mTextMessage = (TextView) findViewById(R.id.message);
         //BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -51,13 +54,16 @@ public class MainActivity extends AppCompatActivity {
 
         item.setChecked(true);
         switch (item.getItemId()) {
-            case R.id.action_home:
+            case R.id.profile:
                 pushFragment(new SelectRequestFragment());
                 break;
-            case R.id.action_dashboard:
+            case R.id.do_request:
                 pushFragment(new ListRequestFragment());
                 break;
-            case R.id.action_notifications:
+            case R.id.historical:
+                pushFragment(new PendingResponseFragment());
+                break;
+            case R.id.list_request:
                 pushFragment(new PendingResponseFragment());
                 break;
         }

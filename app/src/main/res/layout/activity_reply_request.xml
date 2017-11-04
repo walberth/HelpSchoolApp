@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.moviles.utp.helpschoolapp.ReplyRequestActivity">
+    tools:context="com.moviles.utp.helpschoolapp.ui.fragment.ReplyRequestActivity">
 
     <TextView
         android:id="@+id/textView6"

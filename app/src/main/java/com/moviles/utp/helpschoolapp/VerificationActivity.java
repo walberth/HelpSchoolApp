@@ -27,9 +27,9 @@ public class VerificationActivity extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        // EditText txtName = (EditText) findViewById(R.id.txtUser);
+      /*  // EditText txtName = (EditText) findViewById(R.id.txtUser);
         Intent intent = new Intent(this, ListRequestActivity.class);
         //intent.putExtra("name", txtName.getText().toString());
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }

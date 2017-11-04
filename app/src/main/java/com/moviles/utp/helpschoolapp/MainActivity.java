@@ -10,19 +10,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.moviles.utp.helpschoolapp.data.model.UserResponse;
+import com.moviles.utp.helpschoolapp.data.storage.UserSessionManager;
 import com.moviles.utp.helpschoolapp.ui.fragment.ListRequestFragment;
 import com.moviles.utp.helpschoolapp.ui.fragment.PendingResponseFragment;
 import com.moviles.utp.helpschoolapp.ui.fragment.SelectRequestFragment;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     //private TextView mTextMessage;
+    private UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupNavigationView();
+        session = new UserSessionManager(getApplicationContext());
+        if (session.checkLogin()) finish();
+        Map<String, String> user = session.getUserDetails();
+        new UserResponse(user.get(UserSessionManager.KEY_USERNAME),
+                user.get(UserSessionManager.KEY_NAME),
+                user.get(UserSessionManager.KEY_FATHERLASTNAME),
+                user.get(UserSessionManager.KEY_MOTHERLASTNAME),
+                user.get(UserSessionManager.KEY_EMAIL),
+                user.get(UserSessionManager.KEY_PROFILE));
         //mTextMessage = (TextView) findViewById(R.id.message);
         //BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

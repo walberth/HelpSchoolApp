@@ -17,6 +17,16 @@ public class UserResponse {
     public UserResponse() {
     }
 
+    public UserResponse(String username, String name, String fatherLastname, String motherLastname,
+                        String email, String profile) {
+        this.username = username;
+        this.name = name;
+        this.fatherLastname = fatherLastname;
+        this.motherLastname = motherLastname;
+        this.email = email;
+        this.profile = profile;
+    }
+
     public UserResponse(int id, String username, String name, String fatherLastname, String motherLastname,
                         String email, String profile) {
         this.id = id;

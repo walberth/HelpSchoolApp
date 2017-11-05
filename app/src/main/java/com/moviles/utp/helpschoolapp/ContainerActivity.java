@@ -42,14 +42,22 @@ public class ContainerActivity extends AppCompatActivity {
                                 .addToBackStack(null).commit();
                         break;
                     case R.id.do_request:
-                        DoRequestFragment doRequestFragment = new DoRequestFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, doRequestFragment)
+//                        DoRequestFragment doRequestFragment = new DoRequestFragment();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, doRequestFragment)
+//                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                                .addToBackStack(null).commit();
+                        ListRequestFragment listRequestFragment = new ListRequestFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, listRequestFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         break;
-                    case R.id.list_request:
-                        ListRequestFragment listRequestFragment = new ListRequestFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, listRequestFragment)
+                    case R.id.list_request: //CAMBIADO CON DO_REQUEST - SOLO PARA DESARROLLAR
+//                        ListRequestFragment listRequestFragment = new ListRequestFragment();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, listRequestFragment)
+//                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                                .addToBackStack(null).commit();
+                        DoRequestFragment doRequestFragment = new DoRequestFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, doRequestFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         break;

@@ -20,5 +20,4 @@
         title="@string/title_historical"
         barColorWhenSelected ="@color/colorPrimary"
         icon="@drawable/historical"/>
-
 </tabs>

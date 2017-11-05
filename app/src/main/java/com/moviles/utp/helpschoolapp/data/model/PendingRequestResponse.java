@@ -1,7 +1,7 @@
 package com.moviles.utp.helpschoolapp.data.model;
 
 /**
- * Created by walbe on 11/1/2017.
+ * Created by Walberth Gutierrez Telles on 11/1/2017.
  */
 
 public class PendingRequestResponse {

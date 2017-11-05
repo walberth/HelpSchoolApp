@@ -11,7 +11,7 @@ import com.moviles.utp.helpschoolapp.data.model.ListRequestResponse;
 import java.util.ArrayList;
 
 /**
- * Created by walbe on 11/4/2017.
+ * Created by Walberth Gutierrez Telles on 11/4/2017.
  */
 
 public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.ListRequestViewHolder> {

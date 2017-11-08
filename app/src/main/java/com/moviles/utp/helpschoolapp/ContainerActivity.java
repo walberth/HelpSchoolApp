@@ -28,34 +28,26 @@ public class ContainerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_container);
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottombar);
-        // bottomBar.setDefaultTab(R.id.account);
+        bottomBar.setDefaultTab(R.id.do_request);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
             @Override
             public void onTabSelected(int tabId) {
                 switch (tabId) {
-                    case R.id.account:
+                    case R.id.profile:
                         AccountFragment accountFragment = new AccountFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, accountFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         break;
-                    case R.id.do_request:
-//                        DoRequestFragment doRequestFragment = new DoRequestFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, doRequestFragment)
-//                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                                .addToBackStack(null).commit();
+                    case R.id.requests:
                         ListRequestFragment listRequestFragment = new ListRequestFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, listRequestFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         break;
-                    case R.id.list_request: //CAMBIADO CON DO_REQUEST - SOLO PARA DESARROLLAR
-//                        ListRequestFragment listRequestFragment = new ListRequestFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, listRequestFragment)
-//                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//                                .addToBackStack(null).commit();
+                    case R.id.do_request:
                         DoRequestFragment doRequestFragment = new DoRequestFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, doRequestFragment)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

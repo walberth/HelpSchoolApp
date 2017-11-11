@@ -1,14 +1,180 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/accounts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.moviles.utp.helpschoolapp.ui.fragment.AccountFragment">
 
-
-    <TextView
+    <LinearLayout
+        android:id="@+id/containerUsername"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Aqui va la cuenta" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/backgroundProfileText"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/paddingVerticalLinearLayout"
+        android:paddingEnd="@dimen/paddingRightLinearLayout"
+        android:paddingStart="@dimen/paddingLeftLinearLayout"
+        android:paddingTop="@dimen/paddingVerticalLinearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/containerFullname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="@string/profile_username"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:gravity="left"
+            android:text=""
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerFullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/backgroundProfileText"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/paddingVerticalLinearLayout"
+        android:paddingEnd="@dimen/paddingRightLinearLayout"
+        android:paddingStart="@dimen/paddingLeftLinearLayout"
+        android:paddingTop="@dimen/paddingVerticalLinearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/containerEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerUsername"
+        app:layout_constraintVertical_bias="0.155">
+
+        <TextView
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:text="@string/profile_fullname"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/fullname"
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:text=""
+            android:textSize="16sp"
+            android:gravity="left"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/backgroundProfileText"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/paddingVerticalLinearLayout"
+        android:paddingEnd="@dimen/paddingRightLinearLayout"
+        android:paddingStart="@dimen/paddingLeftLinearLayout"
+        android:paddingTop="@dimen/paddingVerticalLinearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/containerJob"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerFullname"
+        app:layout_constraintVertical_bias="0.014">
+
+        <TextView
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:text="@string/profile_email"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:text=""
+            android:gravity="left"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerJob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/backgroundProfileText"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/paddingVerticalLinearLayout"
+        android:paddingEnd="@dimen/paddingRightLinearLayout"
+        android:paddingStart="@dimen/paddingLeftLinearLayout"
+        android:paddingTop="@dimen/paddingVerticalLinearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerEmail"
+        app:layout_constraintVertical_bias="0.1">
+
+        <TextView
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="@string/profile_job"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/job"
+            android:layout_width="@dimen/zeroWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:gravity="left"
+            android:text="" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bottombar_height"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/profile_logout"
+        android:textColor="@color/colorWhite2"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerJob" />
+
+
+</android.support.constraint.ConstraintLayout>

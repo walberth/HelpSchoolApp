@@ -56,14 +56,15 @@ public class UserSessionManager {
         //Llave para validar que exista sesion
         editor.putBoolean(EXIST_LOGIN_SESSION, true);
         //Llaves y valores con informacion de usuario
-        editor.putString("KEY_USERNAME", user.getUsername());
-        editor.putString("KEY_NAME", user.getName());
-        editor.putString("KEY_FATHERLASTNAME", user.getFatherLastname());
-        editor.putString("KEY_MOTHERLASTNAME", user.getMotherLastname());
-        editor.putString("KEY_EMAIL", user.getEmail());
-        editor.putString("KEY_PROFILE", user.getProfile());
+        editor.putString(KEY_USERNAME, user.getUsername());
+        editor.putString(KEY_NAME, user.getName());
+        editor.putString(KEY_FATHERLASTNAME, user.getFatherLastname());
+        editor.putString(KEY_MOTHERLASTNAME, user.getMotherLastname());
+        editor.putString(KEY_EMAIL, user.getEmail());
+        editor.putString(KEY_PROFILE, user.getProfile());
         //Guardar cambios
-        editor.commit();
+        editor.apply();
+        Map<String, String> map = getUserDetails();
     }
 
     //Valida estado de sesion

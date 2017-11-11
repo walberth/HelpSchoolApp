@@ -98,5 +98,4 @@ public class ContainerActivity extends AppCompatActivity {
                 user.get(UserSessionManager.KEY_EMAIL),
                 user.get(UserSessionManager.KEY_PROFILE));
     }
-
 }

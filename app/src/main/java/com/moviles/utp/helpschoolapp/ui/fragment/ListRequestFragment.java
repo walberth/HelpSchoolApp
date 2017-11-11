@@ -27,7 +27,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

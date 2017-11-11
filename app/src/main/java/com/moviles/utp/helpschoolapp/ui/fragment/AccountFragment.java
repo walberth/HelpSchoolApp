@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.moviles.utp.helpschoolapp.ContainerActivity;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class AccountFragment extends Fragment {
 
     private TextView username, fullname, email, job;
+    private Button logout;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -47,6 +49,13 @@ public class AccountFragment extends Fragment {
         email.setText(userResponse.getEmail());
         job = (TextView) view.findViewById(R.id.job);
         job.setText(userResponse.getProfile());
+        logout = (Button) view.findViewById(R.id.btnLogout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContainerActivity.session.logoutSession();
+            }
+        });
         return view;
     }
 

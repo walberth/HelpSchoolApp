@@ -26,7 +26,7 @@ import java.util.Map;
 public class ContainerActivity extends AppCompatActivity {
 
     private static final String TAG = "ContainerActivity";
-    private UserSessionManager session;
+    public static UserSessionManager session;
     public static UserResponse userResponse;
 
 

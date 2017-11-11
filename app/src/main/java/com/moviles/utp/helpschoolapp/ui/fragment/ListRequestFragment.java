@@ -6,14 +6,22 @@ import android.os.AsyncTask;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import com.moviles.utp.helpschoolapp.ContainerActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
+import com.moviles.utp.helpschoolapp.data.model.UserResponse;
+import com.moviles.utp.helpschoolapp.helper.Enum.ProfileEnum;
 import com.moviles.utp.helpschoolapp.ui.adapter.ListRequestAdapterRecyclerView;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,8 +43,11 @@ public class ListRequestFragment extends Fragment {
     private static final String TAG = "PendingResponseActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequest/";
     //TODO: PENDIENTE DE CREAR ACCIONES ACÁ
-    private String username = "GUSTAVO.RAMOS";
-    private String type = "1";
+
+    UserResponse userResponse = ContainerActivity.userResponse;
+
+    private String username = userResponse.getUsername();
+    private String profileType = userResponse.getProfile();
 
     public ListRequestFragment() {
     }
@@ -44,10 +55,13 @@ public class ListRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: start inflate fragment_list_request");
+        this.setHasOptionsMenu(true);
 
         View view = inflater.inflate(R.layout.fragment_list_request, container, false);
 
-        new GetPendingResponse().execute(username, type, view);
+        new GetPendingResponse().execute(username, /*type,*/ view);
+
+        ShowToolbar("", false, view);
 
         return view;
     }
@@ -74,8 +88,8 @@ public class ListRequestFragment extends Fragment {
         protected Void doInBackground(Object... strings) {
             Log.d(TAG, "doInBackground: start");
 
-            postData((String) strings[0], (String) strings[1]);
-            view = (View) strings[2];
+            postData((String) strings[0]/*, (String) strings[1]*/);
+            view = (View) strings[1];
 
             Log.d(TAG, "doInBackground: ends");
             return null;
@@ -139,14 +153,19 @@ public class ListRequestFragment extends Fragment {
             }
         }
 
-        private void postData(String username, String type) {
+        private void postData(String username/*, String type*/) {
             Log.d(TAG, "postData: start");
 
             URL url = null;
+            String type = ProfileEnum.REQUESTER.getId();
 
             try {
                 url = new URL(URL_WS);
                 JSONObject objParams = new JSONObject();
+
+                if(profileType.equals(ProfileEnum.ADMINISTRATOR.getType()))
+                   type = ProfileEnum.ADMINISTRATOR.getId();
+
                 objParams.put("username", username);
                 objParams.put("type", type);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -204,5 +223,37 @@ public class ListRequestFragment extends Fragment {
             Log.d(TAG, "convertJSONObjectToStringParams: ends");
             return stringBuilder.toString();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d(TAG, "onCreateOptionsMenu: start");
+        //super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.filter_menu, menu);
+        Log.d(TAG, "onCreateOptionsMenu: ends");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int idItem = item.getItemId();
+
+        switch (idItem){
+            case R.id.mnuTotal:
+                break;
+            case R.id.mnuAtendida:
+                break;
+            case R.id.mnuPendiente:
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    public void ShowToolbar(String title, boolean upButton, View view){
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);/*
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
     }
 }

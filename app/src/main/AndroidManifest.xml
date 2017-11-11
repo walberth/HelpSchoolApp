@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ResponseActivity" />
-        <activity android:name=".ui.fragment.ReplyRequestActivity" />
         <activity android:name=".ContainerActivity"></activity>
     </application>
 

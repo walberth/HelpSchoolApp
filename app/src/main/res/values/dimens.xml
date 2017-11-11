@@ -13,4 +13,6 @@
     <dimen name="textSizeUserNameCard">25sp</dimen>
     <dimen name="firstwordSize">15sp</dimen>
     <dimen name="padding_horizontal_margin">30dp</dimen>
+    <dimen name="padding_vertical_spinner">60dp</dimen>
+    <dimen name="toolbarHeight">45dp</dimen>
 </resources>

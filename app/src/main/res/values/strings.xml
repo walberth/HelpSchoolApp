@@ -1,10 +1,16 @@
 <resources>
     <!-- General -->
     <string name="app_name">Help School</string>
-    <!-- Module Login -->
+    <!-- Activity Login -->
     <string name="login_field_username">Usuario</string>
     <string name="login_field_password">Contraseña</string>
     <string name="login_button">Iniciar Sesión</string>
+    <!-- Fragmemt Profile -->
+    <string name="profile_username">Usuario</string>
+    <string name="profile_fullname">Nombre</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_job">Puesto</string>
+    <string name="profile_logout">Salir</string>
 
 
     <!-- Validar -->

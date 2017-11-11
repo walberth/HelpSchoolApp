@@ -13,4 +13,9 @@
     <dimen name="textSizeUserNameCard">25sp</dimen>
     <dimen name="firstwordSize">15sp</dimen>
     <dimen name="padding_horizontal_margin">30dp</dimen>
+    <dimen name="paddingLeftLinearLayout">20dp</dimen>
+    <dimen name="paddingRightLinearLayout">20dp</dimen>
+    <dimen name="paddingVerticalLinearLayout">6dp</dimen>
+    <dimen name="marginTopLinearLayoutParent">50dp</dimen>
+    <dimen name="zeroWidth">0dp</dimen>
 </resources>

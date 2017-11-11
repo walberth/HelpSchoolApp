@@ -7,17 +7,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.moviles.utp.helpschoolapp.ui.fragment.ListRequestFragment">
 
-    <LinearLayout
-        android:layout_width="383dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/padding_horizontal_margin"
-        android:paddingRight="@dimen/padding_horizontal_margin"
-        android:paddingTop="@dimen/padding_vertical_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/bottombar_height">
 
-        <include layout="@layout/cardview_pending_response" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/padding_horizontal_margin"
+            android:paddingRight="@dimen/padding_horizontal_margin"
+            android:paddingTop="@dimen/padding_vertical_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </LinearLayout>
+            <!--include layout="@layout/cardview_pending_response" /-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listRequestRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

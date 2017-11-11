@@ -1,24 +1,22 @@
 package com.moviles.utp.helpschoolapp.ui.fragment;
 
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
-
+import com.moviles.utp.helpschoolapp.ui.adapter.ListRequestAdapterRecyclerView;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -27,85 +25,74 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ListRequestFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_PARAM3 = "param3";
-
-    private String mParam1;
-    private String mParam2;
-    private String mParam3;
-
     private static final String TAG = "PendingResponseActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequest/";
     //TODO: PENDIENTE DE CREAR ACCIONES ACÁ
     private String username = "GUSTAVO.RAMOS";
-    private String type = "2";
-
+    private String type = "1";
 
     public ListRequestFragment() {
-        // Required empty public constructor
     }
-
-    public static ListRequestFragment newInstance(String param1, String param2, String param3){
-        ListRequestFragment fragment = new ListRequestFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        args.putString(ARG_PARAM3, param3);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_request, container, false);
+        Log.d(TAG, "onCreateView: start inflate fragment_list_request");
 
+        View view = inflater.inflate(R.layout.fragment_list_request, container, false);
 
+        new GetPendingResponse().execute(username, type, view);
+
+        return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        new GetPendingResponse().execute(username, type);
-    }
-
-    private class GetPendingResponse extends AsyncTask<String, Void, Void> {
+    private class GetPendingResponse extends AsyncTask<Object, Void, Void> {
         private ProgressDialog dialog = new ProgressDialog(getActivity());
         private String content;
+        private View view;
         private PendingRequestResponse pendingRequestResponse;
+        private ArrayList<PendingRequestResponse> pendingRequestResponseList = new ArrayList<>();
 
         @Override
         protected void onPreExecute() {
+            Log.d(TAG, "onPreExecute: start");
+
             dialog.setMessage("Espere por favor...");
             dialog.show();
             dialog.setCancelable(false);
+
+            Log.d(TAG, "onPreExecute: ends");
         }
 
-
         @Override
-        protected Void doInBackground(String... strings) {
-            postData(strings[0], strings[1]);
+        protected Void doInBackground(Object... strings) {
+            Log.d(TAG, "doInBackground: start");
+
+            postData((String) strings[0], (String) strings[1]);
+            view = (View) strings[2];
+
+            Log.d(TAG, "doInBackground: ends");
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            Log.d(TAG, "onPostExecute: start");
+
             JSONArray jsonResponse;
 
             try {
                 //jsonResponse = new JSONObject(content);
                 jsonResponse = new JSONArray(content);
 
-                for(int i  = 0; i < jsonResponse.length(); i++) {
+                for (int i = 0; i < jsonResponse.length(); i++) {
                     JSONObject jsonObject = jsonResponse.getJSONObject(i);
                     pendingRequestResponse = new PendingRequestResponse(
                             Integer.parseInt(jsonObject.getString("idRequest")),
@@ -116,14 +103,23 @@ public class ListRequestFragment extends Fragment {
                             jsonObject.getString("statusRequest"),
                             jsonObject.getString("timeStampCReq")
                     );
+                    pendingRequestResponseList.add(pendingRequestResponse);
                 }
 
                 Log.d(TAG, jsonResponse.toString());
 
-
-                if(pendingRequestResponse.getIdRequest() != 0){
+                if (pendingRequestResponse.getIdRequest() != 0) {
                     dialog.dismiss();
-                    //TODO: DEFINIR UN INTENT A UN ACTIVITY AQUI
+
+                    RecyclerView listRequestRecycler = (RecyclerView) view.findViewById(R.id.listRequestRecycler);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    listRequestRecycler.setLayoutManager(linearLayoutManager);
+
+                    ListRequestAdapterRecyclerView listRequestAdapterRecyclerView =
+                            new ListRequestAdapterRecyclerView(pendingRequestResponseList, R.layout.cardview_pending_response, getActivity());
+                    listRequestRecycler.setAdapter(listRequestAdapterRecyclerView);
+
                 } else {
                     dialog.dismiss();
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
@@ -137,12 +133,16 @@ public class ListRequestFragment extends Fragment {
                             });
                     alertDialog.show();
                 }
+
+                Log.d(TAG, "onPostExecute: ends");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
 
-        private void postData(String username, String type){
+        private void postData(String username, String type) {
+            Log.d(TAG, "postData: start");
+
             URL url = null;
 
             try {
@@ -165,12 +165,12 @@ public class ListRequestFragment extends Fragment {
 
                 int responseCode = connection.getResponseCode();
 
-                if(responseCode == HttpURLConnection.HTTP_OK){
+                if (responseCode == HttpURLConnection.HTTP_OK) {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuffer stringBuffer = new StringBuffer("");
                     String line;
 
-                    while((line = bufferedReader.readLine()) != null){
+                    while ((line = bufferedReader.readLine()) != null) {
                         stringBuffer.append(line);
                         break;
                     }
@@ -178,12 +178,16 @@ public class ListRequestFragment extends Fragment {
                     bufferedReader.close();
                     content = stringBuffer.toString();
                 }
+
+                Log.d(TAG, "postData: ends");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
 
         private String convertJSONObjectToStringParams(JSONObject params) throws Exception {
+            Log.d(TAG, "convertJSONObjectToStringParams: start");
+
             StringBuilder stringBuilder = new StringBuilder();
             boolean first = true;
             Iterator<String> iterator = params.keys();
@@ -198,6 +202,7 @@ public class ListRequestFragment extends Fragment {
                 stringBuilder.append(URLEncoder.encode(value.toString(), "UTF-8"));
             }
 
+            Log.d(TAG, "convertJSONObjectToStringParams: ends");
             return stringBuilder.toString();
         }
     }

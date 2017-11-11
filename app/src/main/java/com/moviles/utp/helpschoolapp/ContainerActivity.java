@@ -1,26 +1,17 @@
 package com.moviles.utp.helpschoolapp;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import com.moviles.utp.helpschoolapp.model.User;
 import com.moviles.utp.helpschoolapp.ui.fragment.AccountFragment;
 import com.moviles.utp.helpschoolapp.ui.fragment.DoRequestFragment;
 import com.moviles.utp.helpschoolapp.ui.fragment.HistoricalFragment;
 import com.moviles.utp.helpschoolapp.ui.fragment.ListRequestFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
-
-/////////import com.example.juanc.platziandroid.View.fragment.HomeFragment;
-
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 import com.moviles.utp.helpschoolapp.data.storage.UserSessionManager;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class ContainerActivity extends AppCompatActivity {

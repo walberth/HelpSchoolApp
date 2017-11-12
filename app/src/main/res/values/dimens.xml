@@ -14,7 +14,7 @@
     <dimen name="firstwordSize">15sp</dimen>
     <dimen name="padding_horizontal_margin">30dp</dimen>
     <dimen name="padding_vertical_spinner">60dp</dimen>
-    <dimen name="toolbarHeight">45dp</dimen>
+    <dimen name="toolbarHeight">60dp</dimen>
     <dimen name="paddingLeftLinearLayout">20dp</dimen>
     <dimen name="paddingRightLinearLayout">20dp</dimen>
     <dimen name="paddingVerticalLinearLayout">6dp</dimen>

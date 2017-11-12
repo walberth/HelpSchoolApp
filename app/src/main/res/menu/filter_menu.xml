@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/mnuTotal"
-        android:title="Total"
-        android:checked="true"/>
-    <item
-        android:id="@+id/mnuAtendida"
-        android:title="Atendida" />
-    <item
-        android:id="@+id/mnuPendiente"
-        android:title="Pendiente" />
-    <item
-        android:id="@+id/mnuEspera"
-        android:title="Espera" />
+    <group
+        android:id="@+id/mnugrpLimit"
+        android:checkableBehavior="single"
+        android:enabled="true"
+        android:visible="true">
+
+        <item
+            android:id="@+id/mnuTotal"
+            android:title="Total"
+            android:checked="true"/>
+        <item
+            android:id="@+id/mnuAtendida"
+            android:title="Atendida" />
+        <item
+            android:id="@+id/mnuPendiente"
+            android:title="Pendiente" />
+        <item
+            android:id="@+id/mnuEspera"
+            android:title="Espera" />
+
+    </group>
 </menu>

@@ -128,7 +128,7 @@ public class ListRequestFragment extends Fragment {
 
                 Log.d(TAG, jsonResponse.toString());
 
-                if (pendingRequestResponse.getIdRequest() != 0) {
+                if (!pendingRequestResponseList.isEmpty()) {
                     dialog.dismiss();
 
                     RecyclerView listRequestRecycler = (RecyclerView) view.findViewById(R.id.listRequestRecycler);

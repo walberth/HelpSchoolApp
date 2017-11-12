@@ -1,14 +1,34 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/historical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.moviles.utp.helpschoolapp.ui.fragment.HistoricalFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hISTORICAL" />
+        android:paddingBottom="@dimen/bottombar_height">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/padding_horizontal_margin"
+            android:paddingRight="@dimen/padding_horizontal_margin"
+            android:paddingTop="@dimen/padding_vertical_margin"
+            android:paddingBottom="@dimen/padding_vertical_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/historicalRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </ScrollView>
 </FrameLayout>

@@ -1,27 +1,15 @@
 package com.moviles.utp.helpschoolapp.ui.fragment;
 
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-
 import com.moviles.utp.helpschoolapp.ContainerActivity;
-import com.moviles.utp.helpschoolapp.LoginActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
-import com.moviles.utp.helpschoolapp.data.storage.UserSessionManager;
-import com.moviles.utp.helpschoolapp.model.User;
-
-import java.util.Map;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +17,7 @@ import java.util.Map;
 public class AccountFragment extends Fragment {
 
     private TextView username, fullname, email, job;
+    private Button logout;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -47,6 +36,13 @@ public class AccountFragment extends Fragment {
         email.setText(userResponse.getEmail());
         job = (TextView) view.findViewById(R.id.job);
         job.setText(userResponse.getProfile());
+        logout = (Button) view.findViewById(R.id.btnLogout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContainerActivity.session.logoutSession();
+            }
+        });
         return view;
     }
 

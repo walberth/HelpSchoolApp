@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mnuPendiente"
+        android:title="Pendiente"/>
+    <item
+        android:id="@+id/mnuAtendida"
+        android:title="Atendida"/>
+
+    <!--<group
+        android:id="@+id/mnugrpLimit"
+        android:checkableBehavior="single"
+        android:enabled="true"
+        android:visible="true">
+
+        &lt;!&ndash;<item
+            android:id="@+id/mnuTotal"
+            android:title="Total"
+            android:checked="true"/>&ndash;&gt;
+        <item
+            android:id="@+id/mnuPendiente"
+            android:title="Pendiente"
+            &lt;!&ndash;android:checked="true"
+            android:checkable="true"&ndash;&gt;/>
+        <item
+            android:id="@+id/mnuAtendida"
+            android:title="Atendida"
+            android:checkable="true"/>
+        &lt;!&ndash;<item
+            android:id="@+id/mnuEspera"
+            android:title="Espera" />&ndash;&gt;
+
+    </group>-->
+</menu>

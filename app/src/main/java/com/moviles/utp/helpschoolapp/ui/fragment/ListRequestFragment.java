@@ -2,18 +2,27 @@ package com.moviles.utp.helpschoolapp.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import com.moviles.utp.helpschoolapp.ContainerActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
+import com.moviles.utp.helpschoolapp.data.model.UserResponse;
+import com.moviles.utp.helpschoolapp.helper.Enum.ProfileEnum;
 import com.moviles.utp.helpschoolapp.ui.adapter.ListRequestAdapterRecyclerView;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,7 +36,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,9 +43,13 @@ import java.util.List;
 public class ListRequestFragment extends Fragment {
     private static final String TAG = "PendingResponseActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequest/";
-    //TODO: PENDIENTE DE CREAR ACCIONES ACÁ
-    private String username = "GUSTAVO.RAMOS";
-    private String type = "1";
+
+    UserResponse userResponse = ContainerActivity.userResponse;
+
+    private String username = userResponse.getUsername();
+    private String profileType = userResponse.getProfile();
+    private String type = "";
+    private View mView;
 
     public ListRequestFragment() {
     }
@@ -45,12 +57,20 @@ public class ListRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: start inflate fragment_list_request");
+        this.setHasOptionsMenu(true);
 
-        View view = inflater.inflate(R.layout.fragment_list_request, container, false);
+        mView = inflater.inflate(R.layout.fragment_list_request, container, false);
 
-        new GetPendingResponse().execute(username, type, view);
+        if(profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
+            type = ProfileEnum.ADMINISTRATOR_Pending.getId();
+        else
+            type = ProfileEnum.REQUESTER_Pending.getId();
 
-        return view;
+        new GetPendingResponse().execute(username, type, mView);
+
+        ShowToolbar("", false, mView);
+
+        return mView;
     }
 
     private class GetPendingResponse extends AsyncTask<Object, Void, Void> {
@@ -108,7 +128,7 @@ public class ListRequestFragment extends Fragment {
 
                 Log.d(TAG, jsonResponse.toString());
 
-                if (pendingRequestResponse.getIdRequest() != 0) {
+                if (!pendingRequestResponseList.isEmpty()) {
                     dialog.dismiss();
 
                     RecyclerView listRequestRecycler = (RecyclerView) view.findViewById(R.id.listRequestRecycler);
@@ -205,5 +225,52 @@ public class ListRequestFragment extends Fragment {
             Log.d(TAG, "convertJSONObjectToStringParams: ends");
             return stringBuilder.toString();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d(TAG, "onCreateOptionsMenu: start");
+        //super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.filter_menu, menu);
+        Log.d(TAG, "onCreateOptionsMenu: ends");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int idItem = item.getItemId();
+
+        switch (idItem){
+            /*case R.id.mnuTotal:
+                if(profileType.equals(ProfileEnum.ADMINISTRATOR_AllList.getType()))
+                    type = ProfileEnum.REQUESTER_AllList.getId();
+                else
+                    type = ProfileEnum.ADMINISTRATOR_AllList.getId();
+                break;*/
+            case R.id.mnuAtendida:
+                //item.setChecked(!item.isChecked());
+                if(profileType.equals(ProfileEnum.ADMINISTRATOR_Response.getType()))
+                    type = ProfileEnum.ADMINISTRATOR_Response.getId();
+                else
+                    type = ProfileEnum.REQUESTER_Response.getId();
+                break;
+            case R.id.mnuPendiente:
+                //item.setChecked(!item.isChecked());
+                if(profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
+                    type = ProfileEnum.ADMINISTRATOR_Pending.getId();
+                else
+                    type = ProfileEnum.REQUESTER_Pending.getId();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        new GetPendingResponse().execute(username, type, mView);
+
+        return true;
+    }
+
+    public void ShowToolbar(String title, boolean upButton, View view){
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
     }
 }

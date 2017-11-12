@@ -164,15 +164,10 @@ public class ListRequestFragment extends Fragment {
             Log.d(TAG, "postData: start");
 
             URL url = null;
-            //String type = ProfileEnum.REQUESTER_AllList.getId();
 
             try {
                 url = new URL(URL_WS);
                 JSONObject objParams = new JSONObject();
-
-                //if(profileType.equals(ProfileEnum.ADMINISTRATOR_AllList.getType()))
-                   //type = ProfileEnum.ADMINISTRATOR_AllList.getId();
-
                 objParams.put("username", username);
                 objParams.put("type", type);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();

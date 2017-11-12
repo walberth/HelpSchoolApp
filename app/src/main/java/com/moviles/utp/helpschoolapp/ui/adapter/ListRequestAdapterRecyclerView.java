@@ -12,8 +12,11 @@ import android.widget.TextView;
 import com.moviles.utp.helpschoolapp.DetailResponseActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
+import com.moviles.utp.helpschoolapp.helper.Enum.ProfileEnum;
 
 import java.util.ArrayList;
+
+import static com.moviles.utp.helpschoolapp.ContainerActivity.userResponse;
 
 /**
  * Created by Walberth Gutierrez Telles on 11/4/2017.
@@ -23,7 +26,8 @@ public class ListRequestAdapterRecyclerView extends RecyclerView.Adapter<ListReq
     private ArrayList<PendingRequestResponse> listPendingRequestResponse;
     private int resource;
     private Activity mActivity;
-
+    private String username = userResponse.getUsername();
+    private String profileType = userResponse.getProfile();
 
     public ListRequestAdapterRecyclerView(ArrayList<PendingRequestResponse> listPendingRequestResponse, int resource, Activity activity) {
         this.listPendingRequestResponse = listPendingRequestResponse;
@@ -64,8 +68,12 @@ public class ListRequestAdapterRecyclerView extends RecyclerView.Adapter<ListReq
         holder.cardListRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentDetailRequest = new Intent(mActivity, DetailResponseActivity.class);
-                mActivity.startActivity(intentDetailRequest);
+                /*if(profileType.equals(ProfileEnum.ADMINISTRATOR_Response.getType())) {*/
+                    Intent intentDetailRequest = new Intent(mActivity, DetailResponseActivity.class);
+                    mActivity.startActivity(intentDetailRequest);
+                /*} else {
+
+                }*/
             }
         });
     }

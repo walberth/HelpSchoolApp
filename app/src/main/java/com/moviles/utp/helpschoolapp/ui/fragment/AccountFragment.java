@@ -11,9 +11,6 @@ import com.moviles.utp.helpschoolapp.ContainerActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 
-import java.util.Map;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */

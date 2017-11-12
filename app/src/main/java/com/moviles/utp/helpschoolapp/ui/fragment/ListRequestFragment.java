@@ -2,6 +2,7 @@ package com.moviles.utp.helpschoolapp.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -42,12 +43,13 @@ import java.util.Iterator;
 public class ListRequestFragment extends Fragment {
     private static final String TAG = "PendingResponseActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequest/";
-    //TODO: PENDIENTE DE CREAR ACCIONES ACÁ
 
     UserResponse userResponse = ContainerActivity.userResponse;
 
     private String username = userResponse.getUsername();
     private String profileType = userResponse.getProfile();
+    private String type = "";
+    private View mView;
 
     public ListRequestFragment() {
     }
@@ -57,13 +59,18 @@ public class ListRequestFragment extends Fragment {
         Log.d(TAG, "onCreateView: start inflate fragment_list_request");
         this.setHasOptionsMenu(true);
 
-        View view = inflater.inflate(R.layout.fragment_list_request, container, false);
+        mView = inflater.inflate(R.layout.fragment_list_request, container, false);
 
-        new GetPendingResponse().execute(username, /*type,*/ view);
+        if(profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
+            type = ProfileEnum.ADMINISTRATOR_Pending.getId();
+        else
+            type = ProfileEnum.REQUESTER_Pending.getId();
 
-        ShowToolbar("", false, view);
+        new GetPendingResponse().execute(username, type, mView);
 
-        return view;
+        ShowToolbar("", false, mView);
+
+        return mView;
     }
 
     private class GetPendingResponse extends AsyncTask<Object, Void, Void> {
@@ -88,8 +95,8 @@ public class ListRequestFragment extends Fragment {
         protected Void doInBackground(Object... strings) {
             Log.d(TAG, "doInBackground: start");
 
-            postData((String) strings[0]/*, (String) strings[1]*/);
-            view = (View) strings[1];
+            postData((String) strings[0], (String) strings[1]);
+            view = (View) strings[2];
 
             Log.d(TAG, "doInBackground: ends");
             return null;
@@ -153,18 +160,18 @@ public class ListRequestFragment extends Fragment {
             }
         }
 
-        private void postData(String username/*, String type*/) {
+        private void postData(String username, String type) {
             Log.d(TAG, "postData: start");
 
             URL url = null;
-            String type = ProfileEnum.REQUESTER.getId();
+            //String type = ProfileEnum.REQUESTER_AllList.getId();
 
             try {
                 url = new URL(URL_WS);
                 JSONObject objParams = new JSONObject();
 
-                if(profileType.equals(ProfileEnum.ADMINISTRATOR.getType()))
-                   type = ProfileEnum.ADMINISTRATOR.getId();
+                //if(profileType.equals(ProfileEnum.ADMINISTRATOR_AllList.getType()))
+                   //type = ProfileEnum.ADMINISTRATOR_AllList.getId();
 
                 objParams.put("username", username);
                 objParams.put("type", type);
@@ -238,22 +245,37 @@ public class ListRequestFragment extends Fragment {
         int idItem = item.getItemId();
 
         switch (idItem){
-            case R.id.mnuTotal:
-                break;
+            /*case R.id.mnuTotal:
+                if(profileType.equals(ProfileEnum.ADMINISTRATOR_AllList.getType()))
+                    type = ProfileEnum.REQUESTER_AllList.getId();
+                else
+                    type = ProfileEnum.ADMINISTRATOR_AllList.getId();
+                break;*/
             case R.id.mnuAtendida:
+                //item.setChecked(!item.isChecked());
+                if(profileType.equals(ProfileEnum.ADMINISTRATOR_Response.getType()))
+                    type = ProfileEnum.ADMINISTRATOR_Response.getId();
+                else
+                    type = ProfileEnum.REQUESTER_Response.getId();
                 break;
             case R.id.mnuPendiente:
+                //item.setChecked(!item.isChecked());
+                if(profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
+                    type = ProfileEnum.ADMINISTRATOR_Pending.getId();
+                else
+                    type = ProfileEnum.REQUESTER_Pending.getId();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+        new GetPendingResponse().execute(username, type, mView);
+
         return true;
     }
 
     public void ShowToolbar(String title, boolean upButton, View view){
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);/*
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
     }
 }

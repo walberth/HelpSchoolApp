@@ -5,8 +5,10 @@ package com.moviles.utp.helpschoolapp.helper.Enum;
  */
 
 public enum ProfileEnum {
-    REQUESTER ("APODERADO", "1"),
-    ADMINISTRATOR ("DIRECTIVO", "3");
+    REQUESTER_Response("APODERADO", "1"),
+    REQUESTER_Pending("APODERADO", "2"),
+    ADMINISTRATOR_Response("DIRECTIVO", "3"),
+    ADMINISTRATOR_Pending("DIRECTIVO", "4");
 
     private final String type, id;
 

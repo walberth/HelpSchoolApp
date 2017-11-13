@@ -1,5 +1,6 @@
 package com.moviles.utp.helpschoolapp.helper.utils;
 
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +23,11 @@ public class Dates {
         return formatter.format(date);
     }
 
+    public static String convertTimestampToFormatLocalDate(String date, SimpleDateFormat formatter) throws ParseException {
+        Date obj = convertDateWithFormat(date, FormatDate.getDateFormatAmericanUntilSeconds());
+        return convertDateWithFormat(obj, FormatDate.getDateFormatLocaleUntilSeconds());
+    }
+
     public static Calendar getCalendarByDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -37,8 +43,8 @@ public class Dates {
     }
 
     public static String getFormatNameCardView(Calendar calendar) {
-        return calendar.get(Calendar.DATE) + " de "
-                + Dates.MONTH_NAME[calendar.get(Calendar.MONTH)] + " de "
-                + calendar.get(Calendar.YEAR);
+        return getExtractDateFromCalendar(calendar, Calendar.DATE) + " de "
+                + getNameMonthFromDate(calendar) + " de "
+                + getExtractDateFromCalendar(calendar, Calendar.YEAR);
     }
 }

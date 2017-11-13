@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,7 +86,9 @@ public class HistoricalFragment extends Fragment {
                                 HistoricalResponse historicalResponse = new HistoricalResponse(
                                         Dates.convertDateWithFormat(childNode.optString("dateEvent"), FormatDate.getDateFormatAmerican()),
                                         childNode.optString("nameUser"),
-                                        childNode.optString("dateEvent"),
+                                        childNode.optString("nameReqt"),
+                                        Dates.convertTimestampToFormatLocalDate(childNode.optString("dateEvent"), FormatDate.getDateFormatLocaleUntilSeconds()),
+                                        childNode.optString("action"),
                                         childNode.optString("evnt"),
                                         childNode.optString("status"));
                                 if (dateMap.containsKey(historicalResponse.getDate())) {
@@ -117,7 +120,6 @@ public class HistoricalFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", ContainerActivity.userResponse.getUsername());
-                //params.put("username", "GUSTAVO.RAMOS");
                 return params;
             }
         };

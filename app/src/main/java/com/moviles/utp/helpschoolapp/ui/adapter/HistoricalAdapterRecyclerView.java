@@ -1,6 +1,7 @@
 package com.moviles.utp.helpschoolapp.ui.adapter;
 
 import android.app.Activity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +40,12 @@ public class HistoricalAdapterRecyclerView extends RecyclerView.Adapter<Historic
     public class HistoricalViewHolder extends RecyclerView.ViewHolder {
 
         private TextView dateCard;
+        private RecyclerView detailHistoricalRecycler;
 
         public HistoricalViewHolder(View itemView) {
             super(itemView);
             dateCard = (TextView) itemView.findViewById(R.id.dateCard);
+            detailHistoricalRecycler = (RecyclerView) itemView.findViewById(R.id.detailHistoricalRecycler);
         }
     }
 
@@ -56,9 +59,10 @@ public class HistoricalAdapterRecyclerView extends RecyclerView.Adapter<Historic
     public void onBindViewHolder(HistoricalViewHolder holder, int position) {
         EventsResponse event = eventsList.get(position);
         holder.dateCard.setText(Dates.getFormatNameCardView(Dates.getCalendarByDate(event.getDate())));
-        //HistoricalResponse historical = events.get(position);
-        //ArrayList<HistoricalResponse> eventsList = eventsMap.get();
-        //holder.dateCard.setText(historical.getDate());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        holder.detailHistoricalRecycler.setLayoutManager(linearLayoutManager);
+        holder.detailHistoricalRecycler.setAdapter(new DetailHistoricalAdapterRecyclerView(event.getMap(), R.layout.cardview_detail_historical, activity));
     }
 
     @Override

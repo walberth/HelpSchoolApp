@@ -116,8 +116,8 @@ public class HistoricalFragment extends Fragment {
                 }) {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                //params.put("username", ContainerActivity.userResponse.getUsername());
-                params.put("username", "GUSTAVO.RAMOS");
+                params.put("username", ContainerActivity.userResponse.getUsername());
+                //params.put("username", "GUSTAVO.RAMOS");
                 return params;
             }
         };

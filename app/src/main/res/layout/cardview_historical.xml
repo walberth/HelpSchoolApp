@@ -3,34 +3,50 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:id="@+id/historicalCard"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    cardview:cardCornerRadius="4dp">
+    android:layout_height="wrap_content"
+    android:elevation="20dp"
+    cardview:cardCornerRadius="4dp"
+    android:layout_marginBottom="10dp">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/backgroundText"
+            android:background="@color/backgroundEventsCardView"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_vertical_margin"
-            android:paddingLeft="@dimen/padding_vertical_margin">
+            android:paddingBottom="@dimen/padding_vertical_margin">
 
             <TextView
                 android:id="@+id/dateCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="Hola"/>
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="16sp"
+                android:paddingTop="10dp"
+                android:textStyle="bold"
+                android:paddingBottom="10dp"
+                android:layout_marginStart="20dp"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_gravity="center"
+                android:background="@color/colorTextSecondary" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/detailHistoricalRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
-
 
     </FrameLayout>
 

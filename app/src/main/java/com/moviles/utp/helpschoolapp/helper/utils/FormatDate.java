@@ -12,15 +12,15 @@ public class FormatDate {
         return new SimpleDateFormat("MM/dd/yyyy");
     }
 
-    public static SimpleDateFormat getDateFormatLocale() {
+    /*public static SimpleDateFormat getDateFormatLocale() {
         return new SimpleDateFormat("dd/MM/yyyy");
-    }
+    }*/
 
     public static SimpleDateFormat getDateFormatAmericanUntilSeconds() {
         return new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
     }
 
     public static SimpleDateFormat getDateFormatLocaleUntilSeconds() {
-        return new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        return new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
     }
 }

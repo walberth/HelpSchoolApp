@@ -38,7 +38,6 @@
             android:layout_marginBottom="@dimen/bottombar_height"
             android:text="enviar" />
 
-
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

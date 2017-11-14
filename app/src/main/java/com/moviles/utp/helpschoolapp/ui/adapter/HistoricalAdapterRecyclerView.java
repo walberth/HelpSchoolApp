@@ -1,6 +1,7 @@
 package com.moviles.utp.helpschoolapp.ui.adapter;
 
 import android.app.Activity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.moviles.utp.helpschoolapp.R;
+import com.moviles.utp.helpschoolapp.data.model.EventsResponse;
 import com.moviles.utp.helpschoolapp.data.model.HistoricalResponse;
+import com.moviles.utp.helpschoolapp.helper.utils.Dates;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Gustavo Ramos M. on 11/11/2017.
@@ -20,14 +27,26 @@ import java.util.ArrayList;
 
 public class HistoricalAdapterRecyclerView extends RecyclerView.Adapter<HistoricalAdapterRecyclerView.HistoricalViewHolder> {
 
-    private ArrayList<HistoricalResponse> events;
+    private List<EventsResponse> eventsList;
     private int resource;
     private Activity activity;
 
-    public HistoricalAdapterRecyclerView(ArrayList<HistoricalResponse> events, int resource, Activity activity) {
-        this.events = events;
+    public HistoricalAdapterRecyclerView(List<EventsResponse> eventsList, int resource, Activity activity) {
+        this.eventsList = eventsList;
         this.resource = resource;
         this.activity = activity;
+    }
+
+    public class HistoricalViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView dateCard;
+        private RecyclerView detailHistoricalRecycler;
+
+        public HistoricalViewHolder(View itemView) {
+            super(itemView);
+            dateCard = (TextView) itemView.findViewById(R.id.dateCard);
+            detailHistoricalRecycler = (RecyclerView) itemView.findViewById(R.id.detailHistoricalRecycler);
+        }
     }
 
     @Override
@@ -38,22 +57,16 @@ public class HistoricalAdapterRecyclerView extends RecyclerView.Adapter<Historic
 
     @Override
     public void onBindViewHolder(HistoricalViewHolder holder, int position) {
-        HistoricalResponse historical = events.get(position);
-        holder.dateCard.setText(historical.getDate());
+        EventsResponse event = eventsList.get(position);
+        holder.dateCard.setText(Dates.getFormatNameCardView(Dates.getCalendarByDate(event.getDate())));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        holder.detailHistoricalRecycler.setLayoutManager(linearLayoutManager);
+        holder.detailHistoricalRecycler.setAdapter(new DetailHistoricalAdapterRecyclerView(event.getMap(), R.layout.cardview_detail_historical, activity));
     }
 
     @Override
     public int getItemCount() {
-        return events.size();
-    }
-
-    public class HistoricalViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView dateCard;
-
-        public HistoricalViewHolder(View itemView) {
-            super(itemView);
-            dateCard = (TextView) itemView.findViewById(R.id.dateCard);
-        }
+        return eventsList.size();
     }
 }

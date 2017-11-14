@@ -5,7 +5,7 @@ package com.moviles.utp.helpschoolapp.data.model;
  */
 
 public class PendingRequestResponse {
-    private int idRequest;
+    private String idRequest;
     private int idRequester;
     private String usernameRequester;
     private int idRequestType;
@@ -13,7 +13,7 @@ public class PendingRequestResponse {
     private String statusRequest;
     private String timeStampCReq;
 
-    public PendingRequestResponse(int idRequest, int idRequester, String usernameRequester, int idRequestType,
+    public PendingRequestResponse(String idRequest, int idRequester, String usernameRequester, int idRequestType,
                                   String request, String statusRequest, String timeStampCReq) {
         this.idRequest = idRequest;
         this.idRequester = idRequester;
@@ -24,11 +24,11 @@ public class PendingRequestResponse {
         this.timeStampCReq = timeStampCReq;
     }
 
-    public int getIdRequest() {
+    public String getIdRequest() {
         return idRequest;
     }
 
-    public void setIdRequest(int idRequest) {
+    public void setIdRequest(String idRequest) {
         this.idRequest = idRequest;
     }
 

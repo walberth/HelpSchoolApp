@@ -2,7 +2,6 @@ package com.moviles.utp.helpschoolapp.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -40,6 +39,7 @@ import java.util.Iterator;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class ListRequestFragment extends Fragment {
     private static final String TAG = "PendingResponseActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequest/";
@@ -115,7 +115,7 @@ public class ListRequestFragment extends Fragment {
                 for (int i = 0; i < jsonResponse.length(); i++) {
                     JSONObject jsonObject = jsonResponse.getJSONObject(i);
                     pendingRequestResponse = new PendingRequestResponse(
-                            Integer.parseInt(jsonObject.getString("idRequest")),
+                            jsonObject.getString("idRequest"),
                             Integer.parseInt(jsonObject.getString("idRequester")),
                             jsonObject.getString("usernameRequester"),
                             Integer.parseInt(jsonObject.getString("idRequestType")),
@@ -124,6 +124,8 @@ public class ListRequestFragment extends Fragment {
                             jsonObject.getString("timeStampCReq")
                     );
                     pendingRequestResponseList.add(pendingRequestResponse);
+
+                    Log.d(TAG, "onPostExecute: idRequest " + pendingRequestResponse.getIdRequest());
                 }
 
                 Log.d(TAG, jsonResponse.toString());
@@ -240,12 +242,6 @@ public class ListRequestFragment extends Fragment {
         int idItem = item.getItemId();
 
         switch (idItem){
-            /*case R.id.mnuTotal:
-                if(profileType.equals(ProfileEnum.ADMINISTRATOR_AllList.getType()))
-                    type = ProfileEnum.REQUESTER_AllList.getId();
-                else
-                    type = ProfileEnum.ADMINISTRATOR_AllList.getId();
-                break;*/
             case R.id.mnuAtendida:
                 //item.setChecked(!item.isChecked());
                 if(profileType.equals(ProfileEnum.ADMINISTRATOR_Response.getType()))

@@ -9,7 +9,6 @@ public class ListRequestType {
     private int id;
     private String requestName;
 
-
     public int getId() {
         return id;
     }

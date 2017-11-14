@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.moviles.utp.helpschoolapp.R;
@@ -46,8 +47,10 @@ import java.util.Map;
 public class DoRequestFragment extends Fragment {
     private static final String TAG = "DoRequestActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequestType/";
+    private static final String URL_WS1 = "http://wshelpdeskutp.azurewebsites.net/createRequestByAppl/";
     private String username = "GUSTAVO.RAMOS";
     private String type = "0";
+    private Button sendRequest;
     private String value;
     private int id;
 
@@ -56,13 +59,12 @@ public class DoRequestFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: start inflate fragment_list_request");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_do_request, container, false);
         new GetRequestType().execute(username, type, view);
         return view;
+
     }
 
     private class GetRequestType extends AsyncTask<Object, Void, Void> {
@@ -73,29 +75,21 @@ public class DoRequestFragment extends Fragment {
         private ArrayList<ListRequestType> listRequestTypeList = new ArrayList<>();
 
         protected void onPreExecute() {
-            Log.d(TAG, "onPreExecute: start");
-
             dialog.setMessage("Espere por favor...");
             dialog.show();
             dialog.setCancelable(false);
-
-            Log.d(TAG, "onPreExecute: ends");
         }
 
         @Override
         protected Void doInBackground(Object... strings) {
-            Log.d(TAG, "doInBackground: start");
 
             postData((String) strings[0], (String) strings[1]);
             view = (View) strings[2];
 
-            Log.d(TAG, "doInBackground: ends");
             return null;
         }
 
         protected void onPostExecute(Void aVoid) {
-            Log.d(TAG, "onPostExecute: start");
-
             JSONArray jsonResponse;
 
             try {
@@ -112,8 +106,6 @@ public class DoRequestFragment extends Fragment {
 
                     listRequestTypeList.add(listRequestType);
                 }
-
-                Log.d(TAG, jsonResponse.toString());
 
                 if (!listRequestTypeList.isEmpty()) {
                     dialog.dismiss();
@@ -151,7 +143,6 @@ public class DoRequestFragment extends Fragment {
                     alertDialog.show();
                 }
 
-                Log.d(TAG, "onPostExecute: ends");
             } catch (Exception ex) {
                 ex.printStackTrace();
                 dialog.dismiss();
@@ -159,7 +150,6 @@ public class DoRequestFragment extends Fragment {
         }
 
         private void postData(String username, String type) {
-            Log.d(TAG, "postData: start");
 
             URL url = null;
 
@@ -197,14 +187,12 @@ public class DoRequestFragment extends Fragment {
                     content = stringBuffer.toString();
                 }
 
-                Log.d(TAG, "postData: ends");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
 
         private String convertJSONObjectToStringParams(JSONObject params) throws Exception {
-            Log.d(TAG, "convertJSONObjectToStringParams: start");
 
             StringBuilder stringBuilder = new StringBuilder();
             boolean first = true;

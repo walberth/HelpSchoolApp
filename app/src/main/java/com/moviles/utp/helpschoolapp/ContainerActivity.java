@@ -78,7 +78,7 @@ public class ContainerActivity extends AppCompatActivity {
         });
     }
 
-    private UserResponse getSessionSharedPreferences() {
+    public UserResponse getSessionSharedPreferences() {
         session = new UserSessionManager(getApplicationContext());
         if (session.checkLogin()) finish();
         Map<String, String> user = session.getUserDetails();

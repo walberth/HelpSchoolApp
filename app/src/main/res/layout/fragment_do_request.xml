@@ -29,10 +29,11 @@
             android:layout_marginBottom="@dimen/bottombar_height"
             android:layout_marginLeft="@dimen/padding_horizontal_margin"
             android:layout_marginRight="@dimen/padding_horizontal_margin"
-            android:ems="10"
+            android:ems="7"
             android:inputType="textMultiLine" />
 
         <Button
+            android:id="@+id/sendRequest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/toolbarHeight"

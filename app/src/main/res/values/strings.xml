@@ -20,6 +20,7 @@
     <string name="title_list_request">General</string>
     <string name="title_historical">Historial</string>
     <string name="title_main">Login</string>
+    <string name="respond_request">Responder solicitudes</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Gustavo Ramos M. on 12/11/2017.
  */
 
-public class DetailHistoricalAdapterRecyclerView extends RecyclerView.Adapter<DetailHistoricalAdapterRecyclerView.DetailHistoricalViewHolder>{
+public class DetailHistoricalAdapterRecyclerView extends RecyclerView.Adapter<DetailHistoricalAdapterRecyclerView.DetailHistoricalViewHolder> {
 
     private List<HistoricalResponse> events;
     private int resource;
@@ -68,13 +68,13 @@ public class DetailHistoricalAdapterRecyclerView extends RecyclerView.Adapter<De
         holder.timestampCard.setText(event.getTimestamp());
         holder.actionCard.setText(event.getAction());
         holder.eventCard.setText(event.getEvent());
-        if(event.getStatus().length() > 0)
+        if (event.getStatus().length() > 0)
             holder.statusCard.setText(event.getStatus());
-         else {
+        else {
             holder.statusCard.setVisibility(View.GONE);
             holder.statusLabel.setVisibility(View.GONE);
         }
-        if(position == (events.size() - 1)){
+        if (position == (events.size() - 1)) {
             holder.horizontalLine.setVisibility(View.GONE);
         }
     }

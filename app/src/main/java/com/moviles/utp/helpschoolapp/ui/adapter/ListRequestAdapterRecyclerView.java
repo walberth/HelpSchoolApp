@@ -4,19 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.moviles.utp.helpschoolapp.DetailResponseActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
-import com.moviles.utp.helpschoolapp.helper.Enum.ProfileEnum;
-
 import java.util.ArrayList;
-
-import static com.moviles.utp.helpschoolapp.ContainerActivity.userResponse;
 
 /**
  * Created by Walberth Gutierrez Telles on 11/4/2017.
@@ -26,8 +22,6 @@ public class ListRequestAdapterRecyclerView extends RecyclerView.Adapter<ListReq
     private ArrayList<PendingRequestResponse> listPendingRequestResponse;
     private int resource;
     private Activity mActivity;
-    private String username = userResponse.getUsername();
-    private String profileType = userResponse.getProfile();
 
     public ListRequestAdapterRecyclerView(ArrayList<PendingRequestResponse> listPendingRequestResponse, int resource, Activity activity) {
         this.listPendingRequestResponse = listPendingRequestResponse;
@@ -59,21 +53,20 @@ public class ListRequestAdapterRecyclerView extends RecyclerView.Adapter<ListReq
 
     @Override
     public void onBindViewHolder(ListRequestViewHolder holder, int position) {
-        PendingRequestResponse listPendingRequest = listPendingRequestResponse.get(position);
+        final PendingRequestResponse listPendingRequest = listPendingRequestResponse.get(position);
 
         holder.labelRequest.setText(listPendingRequest.getRequest());
         holder.timeStampCReq.setText(listPendingRequest.getTimeStampCReq());
         holder.status.setText(listPendingRequest.getStatusRequest());
 
+        Log.d("onBindViewHolder", "IdRequest " + listPendingRequest.getIdRequest());
+
         holder.cardListRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if(profileType.equals(ProfileEnum.ADMINISTRATOR_Response.getType())) {*/
                     Intent intentDetailRequest = new Intent(mActivity, DetailResponseActivity.class);
+                    intentDetailRequest.putExtra("requestId", listPendingRequest.getIdRequest());
                     mActivity.startActivity(intentDetailRequest);
-                /*} else {
-
-                }*/
             }
         });
     }

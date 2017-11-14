@@ -48,8 +48,7 @@ public class HistoricalFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_historical, container, false);
         dialog = new ProgressDialog(getContext());
         /*RecyclerView historicalRecycler = (RecyclerView) view.findViewById(R.id.historicalRecycler);
@@ -64,8 +63,7 @@ public class HistoricalFragment extends Fragment {
 
     private void getHistoricalEvents(String url) {
         showDialog();
-        StringRequest request = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         data = new ArrayList<>();

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".helper.ui.Splash"
         android:allowBackup="true"
         android:icon="@drawable/help_desk_school_black"
         android:label="@string/app_name"
@@ -15,15 +16,23 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeOfficial.ActionBar">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".ResponseActivity" />
+        <activity android:name=".ContainerActivity" />
+        <activity android:name=".DetailResponseActivity" />
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ResponseActivity" />
-        <activity android:name=".ContainerActivity" />
-        <activity android:name=".DetailResponseActivity"></activity>
     </application>
 
 </manifest>

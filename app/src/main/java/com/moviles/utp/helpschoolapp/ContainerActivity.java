@@ -38,7 +38,9 @@ public class ContainerActivity extends AppCompatActivity {
 
                         AccountFragment accountFragment = new AccountFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, accountFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .setCustomAnimations(R.animator.slide_left_enter, R.animator.slide_left_exit,
+                                        R.animator.slide_right_enter, R.animator.slide_right_exit)
+                                //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 
                         Log.d(TAG, "onTabSelected: ends profile tabs");
@@ -48,7 +50,9 @@ public class ContainerActivity extends AppCompatActivity {
 
                         ListRequestFragment listRequestFragment = new ListRequestFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, listRequestFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .setCustomAnimations(R.animator.slide_left_enter, R.animator.slide_left_exit,
+                                        R.animator.slide_right_enter, R.animator.slide_right_exit)
+                                //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 
                         Log.d(TAG, "onTabSelected: ends request tab");
@@ -58,7 +62,9 @@ public class ContainerActivity extends AppCompatActivity {
 
                         DoRequestFragment doRequestFragment = new DoRequestFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, doRequestFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .setCustomAnimations(R.animator.slide_left_enter, R.animator.slide_left_exit,
+                                        R.animator.slide_right_enter, R.animator.slide_right_exit)
+                                //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 
                         Log.d(TAG, "onTabSelected: end do_request tab");
@@ -68,7 +74,9 @@ public class ContainerActivity extends AppCompatActivity {
 
                         HistoricalFragment historicalFragment = new HistoricalFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, historicalFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .setCustomAnimations(R.animator.slide_left_enter, R.animator.slide_left_exit,
+                                        R.animator.slide_right_enter, R.animator.slide_right_exit)
+                                //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
 
                         Log.d(TAG, "onTabSelected: end historical tab");

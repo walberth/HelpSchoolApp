@@ -13,4 +13,5 @@
     <color name="colorWhiteSmoke">#F5F5F5</color>
     <color name="backgroundText">#8a262020</color>
     <color name="backgroundProfileText">#BFD1D9</color>
+    <color name="backgroundEventsCardView">#DDE8ED</color>
 </resources>

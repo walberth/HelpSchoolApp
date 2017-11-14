@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/profile_directive"
+        title="@string/title_profile"
+        barColorWhenSelected ="@color/colorPrimary"
+        icon="@drawable/profile"/>
+    <tab
+        id="@+id/respond_request"
+        title="@string/respond_request"
+        barColorWhenSelected ="@color/colorPrimary"
+        icon="@drawable/submit_response"/>
+</tabs>

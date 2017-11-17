@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View.OnClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,6 +21,8 @@ import android.widget.Spinner;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.ListRequestType;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
+import com.moviles.utp.helpschoolapp.data.model.SendRequest;
+import com.moviles.utp.helpschoolapp.data.storage.UserSessionManager;
 import com.moviles.utp.helpschoolapp.ui.adapter.ListRequestAdapterRecyclerView;
 
 import org.json.JSONArray;
@@ -46,31 +49,48 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoRequestFragment extends Fragment {
+public class DoRequestFragment extends Fragment implements OnClickListener{
     private static final String TAG = "DoRequestActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequestType/";
     private static final String URL_WS2 = "http://wshelpdeskutp.azurewebsites.net/createRequestByAppl/";
     private String username = "GUSTAVO.RAMOS";
     private String type = "0";
+
+    private String name ;
+    private String idRequestType ="1";
+    private String description = "Cambio de salón";
+
     private Button sendRequest;
     private String value;
     private int id;
 
     public DoRequestFragment() {
         // Required empty public constructor
+        UserSessionManager session = new UserSessionManager(getContext());
+        session.getUserDetails();
+        Map<String, String> user = session.getUserDetails();
+        name = user.get(UserSessionManager.KEY_USERNAME);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this
         View view = inflater.inflate(R.layout.fragment_do_request, container, false);
         new GetRequestType().execute(username, type, view);
+        //Button sendR = (Button) container.findViewById(R.id.sendRequest);
         return view;
+    }
 
+    @Override
+    public void onClick(View v) {
+            Button send = (Button) v.findViewById(R.id.sendRequest);
+            send.setText("Hola");
     }
 
     private class GetRequestType extends AsyncTask<Object, Void, Void> {
-        private ProgressDialog dialog = new ProgressDialog(getActivity());
+          private ProgressDialog dialog = new ProgressDialog(getActivity());
         private String content;
         private View view;
         private ListRequestType listRequestType;
@@ -219,15 +239,17 @@ public class DoRequestFragment extends Fragment {
 
     //ENVIO DE SOLICITUD
 
-    public class SendRequest extends AsyncTask<Object,Void,Void>{
+    private class  SendRequest extends AsyncTask<Object,Void,Void>{
         private ProgressDialog dialogo = new ProgressDialog(getActivity());
         private String content;
         private View view;
         private SendRequest confirmation;
         private ArrayList<SendRequest> confirmationList= new ArrayList<>();
-        public SendRequest(String status) {
 
+        public SendRequest(String status) {
+            this.getStatus();
         }
+
 
         protected void onPreExecute(){
             dialogo.setMessage("Enviando solicitud...");
@@ -237,6 +259,11 @@ public class DoRequestFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Object... strings) {
+            UserSessionManager session = new UserSessionManager(getActivity());
+            session.getUserDetails();
+            Map<String, String> user = session.getUserDetails();
+            name = user.get(UserSessionManager.KEY_USERNAME);
+
             postData((String) strings[0], (String) strings[1], (String) strings[2]);
             view = (View) strings[3];
             return null;
@@ -251,8 +278,8 @@ public class DoRequestFragment extends Fragment {
                 for(int i = 0; i<jsonResponse.length();i++){
                     JSONObject jsonObject = jsonResponse.getJSONObject(i);
                     confirmation = new SendRequest(
-                        jsonObject.getString("status"));
-                }
+                            jsonObject.getString("status"));
+                    }
 
                 confirmationList.add(confirmation);
 

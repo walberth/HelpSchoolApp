@@ -4,7 +4,9 @@
     android:id="@+id/cardListR"
     android:layout_width="match_parent"
     android:layout_height="@dimen/height_cardview"
-    android:paddingTop="40dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:elevation="20dp"
     cardview:cardCornerRadius="@dimen/cornerradius_cardview">
 
     <FrameLayout
@@ -13,42 +15,43 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/backgroundText"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundEventsCardView"
             android:orientation="vertical"
+            android:paddingTop="@dimen/padding_vertical_margin"
             android:paddingBottom="@dimen/padding_vertical_margin"
-            android:paddingLeft="@dimen/padding_vertical_margin">
+            android:paddingEnd="@dimen/padding_vertical_margin"
+            android:paddingStart="@dimen/padding_vertical_margin">
 
             <TextView
                 android:id="@+id/txtRequest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/textSizeUserNameCard" />
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/timeStampCReq"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight=".6"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/firstwordSize" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/txtStatus"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight=".4"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorTextPrimary"
                     android:textSize="@dimen/firstwordSize" />
+
             </LinearLayout>
 
         </LinearLayout>

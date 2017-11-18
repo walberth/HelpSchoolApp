@@ -10,7 +10,7 @@
         android:id="@+id/appBarMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="true"
         android:theme="@style/AppThemeOfficial.ActionBar">
 
@@ -19,30 +19,32 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbarHeight"
             android:background="@color/colorPrimaryDark"
-            app:popupTheme="@style/AppThemeOfficial.PopupOverlay"/>
+            app:titleTextColor="@color/colorWhite2"
+            app:popupTheme="@style/AppThemeOfficial.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/bottombar_height"
-        android:paddingTop="40dp">
+        android:paddingBottom="@dimen/bottombar_height">-->
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="70dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!--include layout="@layout/cardview_pending_response" /-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listRequestRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/padding_horizontal_margin"
-            android:paddingRight="@dimen/padding_horizontal_margin"
-            android:paddingTop="@dimen/padding_vertical_margin"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
 
-            <!--include layout="@layout/cardview_pending_response" /-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/listRequestRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+    <!--</ScrollView>-->
 </FrameLayout>

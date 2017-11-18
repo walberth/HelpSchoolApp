@@ -7,11 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.moviles.utp.helpschoolapp.ContainerActivity">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/bottombar_height">
-</FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/bottombar_height">
+    </FrameLayout>
 
     <include layout="@layout/bottombar"/>
 

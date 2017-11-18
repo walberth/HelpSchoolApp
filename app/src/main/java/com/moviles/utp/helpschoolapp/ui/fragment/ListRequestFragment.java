@@ -17,14 +17,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.moviles.utp.helpschoolapp.ContainerActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 import com.moviles.utp.helpschoolapp.helper.Enum.ProfileEnum;
+import com.moviles.utp.helpschoolapp.helper.utils.Dates;
+import com.moviles.utp.helpschoolapp.helper.utils.FormatDate;
 import com.moviles.utp.helpschoolapp.ui.adapter.ListRequestAdapterRecyclerView;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -61,7 +66,7 @@ public class ListRequestFragment extends Fragment {
 
         mView = inflater.inflate(R.layout.fragment_list_request, container, false);
 
-        if(profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
+        if (profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
             type = ProfileEnum.ADMINISTRATOR_Pending.getId();
         else
             type = ProfileEnum.REQUESTER_Pending.getId();
@@ -121,7 +126,7 @@ public class ListRequestFragment extends Fragment {
                             Integer.parseInt(jsonObject.getString("idRequestType")),
                             jsonObject.getString("request"),
                             jsonObject.getString("statusRequest"),
-                            jsonObject.getString("timeStampCReq")
+                            Dates.convertTimestampToFormatLocalDate(jsonObject.optString("timeStampCReq"), FormatDate.getDateFormatLocaleUntilSeconds())
                     );
                     pendingRequestResponseList.add(pendingRequestResponse);
 
@@ -241,17 +246,17 @@ public class ListRequestFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int idItem = item.getItemId();
 
-        switch (idItem){
+        switch (idItem) {
             case R.id.mnuAtendida:
                 //item.setChecked(!item.isChecked());
-                if(profileType.equals(ProfileEnum.ADMINISTRATOR_Response.getType()))
+                if (profileType.equals(ProfileEnum.ADMINISTRATOR_Response.getType()))
                     type = ProfileEnum.ADMINISTRATOR_Response.getId();
                 else
                     type = ProfileEnum.REQUESTER_Response.getId();
                 break;
             case R.id.mnuPendiente:
                 //item.setChecked(!item.isChecked());
-                if(profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
+                if (profileType.equals(ProfileEnum.ADMINISTRATOR_Pending.getType()))
                     type = ProfileEnum.ADMINISTRATOR_Pending.getId();
                 else
                     type = ProfileEnum.REQUESTER_Pending.getId();
@@ -265,8 +270,9 @@ public class ListRequestFragment extends Fragment {
         return true;
     }
 
-    public void ShowToolbar(String title, boolean upButton, View view){
+    public void ShowToolbar(String title, boolean upButton, View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle("Listado de solicitudes");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
     }
 }

@@ -51,7 +51,7 @@ public class DoRequestFragment extends Fragment{
     private EditText description;
     private String value;
     private int id;
-
+    
     public DoRequestFragment() {
         // Required empty public constructor
     }

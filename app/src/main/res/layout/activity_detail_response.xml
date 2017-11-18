@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbarHeight"
             android:background="@color/colorPrimaryDark"
+            app:titleTextColor="@color/colorWhite2"
             app:popupTheme="@style/AppThemeOfficial.PopupOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
@@ -31,6 +32,7 @@
         android:layout_marginLeft="52dp"
         android:text="Solicitud:"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtRequestDetail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -56,37 +58,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Fecha:"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtFechaDetail"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.888" />
 
     <TextView
         android:id="@+id/txtFechaDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="24dp"
         android:text="fechaprobe"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txtDetailResponse"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintHorizontal_bias="0.614"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/txtDetailResponse"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="96dp"
+        android:background="@drawable/edit_text_background"
         android:editable="false"
         android:ems="10"
         android:inputType="textMultiLine"
         android:text="This text is for probe only. for more text to display in this item please consume web service"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtWriteResponse"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -95,12 +105,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="statusProbe"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="32dp"
+        android:text="statusProbe"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/txtWriteResponse"
+        android:layout_width="251dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="344dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarMenu" />
+
+    <Button
+        android:id="@+id/btnSendResponse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="RESPONDER"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtWriteResponse" />
         app:layout_constraintVertical_bias="0.031" />
+
 </android.support.constraint.ConstraintLayout>

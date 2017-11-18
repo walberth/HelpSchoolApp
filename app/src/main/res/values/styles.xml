@@ -6,6 +6,7 @@
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorTextPrimary</item>
         <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">false</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
@@ -16,7 +17,8 @@
     </style>
     <!-- Style for Action Bar, having Official Style for App theme -->
     <style name="AppThemeOfficial.ActionBar" parent="AppThemeOfficial">
-        <item name="android:statusBarColor">@color/colorStatusBar</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/colorWhite2</item>
     </style>
     <!-- Style for Splash -->
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">

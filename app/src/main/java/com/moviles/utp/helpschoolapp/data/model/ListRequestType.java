@@ -1,5 +1,7 @@
 package com.moviles.utp.helpschoolapp.data.model;
 
+import android.app.VoiceInteractor;
+
 /**
  * Created by JuanCarlos on 11/11/2017.
  */
@@ -8,6 +10,7 @@ public class ListRequestType {
 
     private int id;
     private String requestName;
+    private String confirmation;
 
     public int getId() {
         return id;

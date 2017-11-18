@@ -37,7 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/toolbarHeight"
-            android:text="enviar" />
+            android:text="enviar"
+            android:onClick="onClick"/>
 
 
     </LinearLayout>

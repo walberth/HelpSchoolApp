@@ -66,13 +66,7 @@ public class DoRequestFragment extends Fragment implements OnClickListener{
 
     public DoRequestFragment() {
         // Required empty public constructor
-        UserSessionManager session = new UserSessionManager(getContext());
-        session.getUserDetails();
-        Map<String, String> user = session.getUserDetails();
-        name = user.get(UserSessionManager.KEY_USERNAME);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {

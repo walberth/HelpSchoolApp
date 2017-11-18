@@ -36,9 +36,8 @@
             android:id="@+id/sendRequest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/toolbarHeight"
-            android:text="enviar"
-            android:onClick="onClick"/>
+            android:layout_marginBottom="@dimen/bottombar_height"
+            android:text="enviar"/>
 
 
     </LinearLayout>

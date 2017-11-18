@@ -1,13 +1,15 @@
 package com.moviles.utp.helpschoolapp;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,59 +20,64 @@ import com.android.volley.toolbox.StringRequest;
 import com.moviles.utp.helpschoolapp.data.model.DetailResponse;
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 import com.moviles.utp.helpschoolapp.helper.controller.VolleyController;
+import com.moviles.utp.helpschoolapp.ui.fragment.ListRequestFragment;
+
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Walberth Gutierrez Telles on 11/4/2017.
- */
-
-public class DetailResponseActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class EditActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String URL_GET_DETAIL_RESPONSE = "http://wshelpdeskutp.azurewebsites.net/listResponseByRequestId/";
+    private static final String URL_GET_DETAIL_REQUEST = "http://wshelpdeskutp.azurewebsites.net/listResponseByRequestId/";
+    private static final String URL_WS_EDIT_REQUEST = "http://wshelpdeskutp.azurewebsites.net/updateReqBAppl/";
+    private static final String URL_WS_EDIT_RESPONSE = "http://wshelpdeskutp.azurewebsites.net/updateAnsReqBExec/";
+    private static final String TAG = "EditActivity";
     UserResponse userResponse = ContainerActivity.userResponse;
-    private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listResponseByRequestId/";
-    private static final String URL_WS_SEND = "http://wshelpdeskutp.azurewebsites.net/creationAnsReqBExec/";
-    private static final String TAG = "DetailResponseActivity";
-    private TextView txtRequestDetail, txtFechaDetail, txtStatusRequest;
-    private EditText txtDetailResponse;
+    private TextView txtEditResquest;
+    private Button btnEditRequest;
     private ProgressDialog dialog;
+    private String profile = userResponse.getProfile();
     private DetailResponse mDetailResponse;
     private String requestId;
-    private EditText txtWriteResponse;
-    private Button btnSendResponse;
-    private String username = userResponse.getUsername();
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_response);
+        setContentView(R.layout.activity_edit);
 
         requestId = getIntent().getStringExtra("requestId");
 
-        dialog = new ProgressDialog(DetailResponseActivity.this);
+        dialog = new ProgressDialog(EditActivity.this);
 
-        txtRequestDetail = (TextView) findViewById(R.id.txtRequestDetail);
-        txtFechaDetail = (TextView) findViewById(R.id.txtFechaDetail);
-        txtStatusRequest = (TextView) findViewById(R.id.txtStatusRequest);
-        txtWriteResponse = (EditText) findViewById(R.id.txtWriteResponse);
+        String URL;
+        //Traer el id del request acá
+        if(profile.equals("DIRECTIVO"))
+            URL = URL_GET_DETAIL_RESPONSE;
+        else
+            URL = URL_GET_DETAIL_REQUEST;
 
-        txtDetailResponse = (EditText) findViewById(R.id.txtDetailResponse);
-        txtDetailResponse.setEnabled(false);
+        txtEditResquest = (TextView) findViewById(R.id.txtEditResquest);
+        btnEditRequest = (Button) findViewById(R.id.btnEditRequest);
+        btnEditRequest.setOnClickListener(this);
 
-        btnSendResponse = (Button) findViewById(R.id.btnSendResponse);
-        btnSendResponse.setOnClickListener(this);
-
-        getDetailResponse(URL_WS);
+        getDetailToEdit(URL);
         ShowToolbar("",true);
     }
 
     @Override
     public void onClick(View v) {
-        sendResponse(URL_WS_SEND);
+        String URL;
+        if(profile.equals("DIRECTIVO"))
+            URL = URL_WS_EDIT_RESPONSE;
+        else
+            URL = URL_WS_EDIT_REQUEST;
+
+        updateRequest(URL);
     }
 
-    private void getDetailResponse(String url) {
+    private void getDetailToEdit(String url) {
         dialog.setMessage("Espere Por favor..");
         dialog.show();
 
@@ -80,23 +87,23 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                     public void onResponse(String response) {
                         try {
                             Log.d(TAG, "onResponse: " + response.toString());
+
                             JSONObject jsonResponse = new JSONObject(response.toString());
                             mDetailResponse = new DetailResponse(
                                     jsonResponse.optString("status"),
                                     jsonResponse.optString("idRequestType"),
                                     jsonResponse.optString("timeStampCReq"),
-                                    jsonResponse.optString("descriptionResponseRequest")
+                                    jsonResponse.optString("descriptionResponseRequest").equals("")
+                                            ? jsonResponse.optString("descriptionRequest")
+                                            : jsonResponse.optString("descriptionResponseRequest")
                             );
 
                             /*Log.d(TAG, "onResponse: status " + mDetailResponse.getStatus());
                             Log.d(TAG, "onResponse: request " + mDetailResponse.getRequestType());
-                            Log.d(TAG, "onResponse: dateTime " + mDetailResponse.getDateTime());
-                            Log.d(TAG, "onResponse: description " + mDetailResponse.getDescription());*/
+                            Log.d(TAG, "onResponse: dateTime " + mDetailResponse.getDateTime());*/
+                            Log.d(TAG, "onResponse: description " + mDetailResponse.getDescription());
 
-                            txtStatusRequest.setText(mDetailResponse.getStatus());
-                            txtRequestDetail.setText(mDetailResponse.getRequestType());
-                            txtFechaDetail.setText(mDetailResponse.getDateTime());
-                            txtDetailResponse.setText(mDetailResponse.getDescription());
+                            txtEditResquest.setText(mDetailResponse.getDescription());
 
                             dialog.hide();
                         } catch (Exception ex) {
@@ -119,12 +126,11 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                 return params;
             }
         };
-        VolleyController.getInstance(DetailResponseActivity.this).addToRequestQueue(request);
+        VolleyController.getInstance(EditActivity.this).addToRequestQueue(request);
     }
 
-    private void sendResponse(String url){
-        //String response;
-        dialog.setMessage("Enviando Información...");
+    public void updateRequest(String url) {
+        dialog.setMessage("Espere Por favor..");
         dialog.show();
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
@@ -133,16 +139,25 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                     public void onResponse(String response) {
                         try {
                             Log.d(TAG, "onResponse: " + response.toString());
+
                             JSONObject jsonResponse = new JSONObject(response.toString());
                             response = jsonResponse.optString("status");
 
                             dialog.hide();
 
-                            if(response.equals("Created")){
+                            if(response.equals("Updated")){
                                 Log.d(TAG, "onResponse: status " + response);
-                                txtDetailResponse.setText("");
+
+                                txtEditResquest.setText("");
+//                                ListRequestFragment listRequestFragment = new ListRequestFragment();
+//                                getSupportFragmentManager().beginTransaction().replace(R.id.container, listRequestFragment)
+//                                        .setCustomAnimations(R.animator.slide_left_enter, R.animator.slide_left_exit,
+//                                                R.animator.slide_right_enter, R.animator.slide_right_exit)
+//                                        //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                                        .addToBackStack(null).commit();
+
                             } else {
-                                Toast.makeText(DetailResponseActivity.this, "No se grabo la respuesta", Toast.LENGTH_LONG).show();
+                                Toast.makeText(EditActivity.this, "No se actualizo el mensaje", Toast.LENGTH_LONG).show();
                             }
                         } catch (Exception ex) {
                             Log.e(TAG, "onResponse: error throw " + ex.getMessage());
@@ -160,16 +175,19 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("idReq", requestId); //SEND THE ID FOR THE REQUEST
-                params.put("nameExec", username);
-                params.put("description", txtWriteResponse.getText().toString());
-                params.put("status", mDetailResponse.getStatus());
+
+                if(profile.equals("DIRECTIVO"))
+                    params.put("idReq", requestId);
+                else
+                    params.put("vId", requestId);
+
+                params.put("vDescription", txtEditResquest.getText().toString()); //SEND THE ID FOR THE REQUEST
+
                 return params;
             }
         };
-        VolleyController.getInstance(DetailResponseActivity.this).addToRequestQueue(request);
+        VolleyController.getInstance(EditActivity.this).addToRequestQueue(request);
     }
-
     public void ShowToolbar(String title, boolean upButton) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

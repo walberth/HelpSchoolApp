@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
 import com.moviles.utp.helpschoolapp.ContainerActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
@@ -268,5 +271,74 @@ public class ListRequestFragment extends Fragment {
     public void ShowToolbar(String title, boolean upButton, View view){
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+    }
+
+    public class EditRequest extends AsyncTask<Object, Void, Void>{
+        private ProgressDialog dialog = new ProgressDialog(getActivity());
+        AlertDialog.Builder alertEditText = new AlertDialog.Builder(getActivity());
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Espere por favor...");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            final EditText editText = new EditText(getContext());
+
+            alertEditText.setMessage("Enter Your Message");
+            alertEditText.setTitle("Enter Your Title");
+            alertEditText.setView(editText);
+
+            alertEditText.setPositiveButton("Yes Option", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    //What ever you want to do with the value
+                    Editable YouEditTextValue = editText.getText();
+                    //OR
+                    //String YouEditTextValue = editText.getText().toString();
+                }
+            });
+
+            alertEditText.setNegativeButton("No Option", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // what ever you want to do with No option.
+                }
+            });
+
+            alertEditText.show();
+        }
+
+        public void pruebaDialog(){
+            AlertDialog.Builder alertEditText = new AlertDialog.Builder(getActivity());
+            final EditText editText = new EditText(getContext());
+            alertEditText.setMessage("Enter Your Message");
+            alertEditText.setTitle("Enter Your Title");
+            alertEditText.setView(editText);
+
+            alertEditText.setPositiveButton("Yes Option", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    //What ever you want to do with the value
+                    Editable YouEditTextValue = editText.getText();
+                    //OR
+                    //String YouEditTextValue = editText.getText().toString();
+                }
+            });
+
+            alertEditText.setNegativeButton("No Option", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // what ever you want to do with No option.
+                }
+            });
+
+            alertEditText.show();
+        }
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            return null;
+        }
     }
 }

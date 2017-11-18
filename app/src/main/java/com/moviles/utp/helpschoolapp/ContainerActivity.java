@@ -93,8 +93,8 @@ public class ContainerActivity extends AppCompatActivity {
                             break;
 
                        case R.id.historical:
-                            AccountFragment accountFragment1= new AccountFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.container, accountFragment1)
+                            HistoricalFragment historicalFragment1= new HistoricalFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container, historicalFragment1)
                                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                     .addToBackStack(null).commit();
                             break;

@@ -93,9 +93,9 @@ public class ListRequestAdapterRecyclerView extends RecyclerView.Adapter<ListReq
 
                                 //TODO: IMPLEMENTAR LA EDICION EN UN DIALOG AQUI MAS ADELANTE
                                 break;
-                            case R.id.mnuEliminar:
-                                Log.d(TAG, "onMenuItemClick: valor presionado fue eliminar");
-                                break;
+//                            case R.id.mnuEliminar:
+//                                Log.d(TAG, "onMenuItemClick: valor presionado fue eliminar");
+//                                break;
                             default:
                                 break;
                         }

@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
@@ -16,71 +14,64 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
-
+import android.widget.TextView;
+import android.widget.Toast;
+import com.moviles.utp.helpschoolapp.ContainerActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.ListRequestType;
-import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
 import com.moviles.utp.helpschoolapp.data.model.SendRequest;
-import com.moviles.utp.helpschoolapp.data.storage.UserSessionManager;
-import com.moviles.utp.helpschoolapp.ui.adapter.ListRequestAdapterRecyclerView;
-
+import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoRequestFragment extends Fragment implements OnClickListener{
+public class DoRequestFragment extends Fragment{
+    UserResponse userResponse = ContainerActivity.userResponse;
     private static final String TAG = "DoRequestActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequestType/";
     private static final String URL_WS2 = "http://wshelpdeskutp.azurewebsites.net/createRequestByAppl/";
-    private String username = "GUSTAVO.RAMOS";
+    private String username = userResponse.getUsername();
     private String type = "0";
-
-    private String name ;
-    private String idRequestType ="1";
-    private String description = "Cambio de salón";
-
-    private Button sendRequest;
+    private Integer idRequestType;
+    private EditText description;
     private String value;
     private int id;
 
     public DoRequestFragment() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this
         View view = inflater.inflate(R.layout.fragment_do_request, container, false);
         new GetRequestType().execute(username, type, view);
-        //Button sendR = (Button) container.findViewById(R.id.sendRequest);
+        description = (EditText) view.findViewById(R.id.detail_request);
+        //description.getText();
+        Log.d(TAG, "description:" + description);
+        Button sendR = (Button) view.findViewById(R.id.sendRequest);
+        sendR.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "description:" + description.getText());
+                new SendUserRequest().execute(username,idRequestType,description.getText().toString());
+            }
+        });
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-            Button send = (Button) v.findViewById(R.id.sendRequest);
-            send.setText("Hola");
     }
 
     private class GetRequestType extends AsyncTask<Object, Void, Void> {
@@ -110,7 +101,7 @@ public class DoRequestFragment extends Fragment implements OnClickListener{
             JSONArray jsonResponse;
 
             try {
-                //jsonResponse = new JSONObject(content);
+
                 jsonResponse = new JSONArray(content);
 
                 for (int i = 0; i < jsonResponse.length(); i++) {
@@ -136,7 +127,7 @@ public class DoRequestFragment extends Fragment implements OnClickListener{
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             ListRequestType obj = (ListRequestType) parent.getItemAtPosition(position);
                             value = (String) obj.getRequestName();
-                            id = (Integer) obj.getId();
+                            idRequestType = (Integer) obj.getId();
                             Log.d(TAG, "Spinner Value:" + value);
                             Log.d(TAG, "Spinner id:" + id);
                         }
@@ -228,22 +219,15 @@ public class DoRequestFragment extends Fragment implements OnClickListener{
             Log.d(TAG, "convertJSONObjectToStringParams: ends");
             return stringBuilder.toString();
         }
-
     }
 
     //ENVIO DE SOLICITUD
 
-    private class  SendRequest extends AsyncTask<Object,Void,Void>{
+    private class  SendUserRequest extends AsyncTask<Object,Void,Void>{
         private ProgressDialog dialogo = new ProgressDialog(getActivity());
         private String content;
         private View view;
         private SendRequest confirmation;
-        private ArrayList<SendRequest> confirmationList= new ArrayList<>();
-
-        public SendRequest(String status) {
-            this.getStatus();
-        }
-
 
         protected void onPreExecute(){
             dialogo.setMessage("Enviando solicitud...");
@@ -253,41 +237,34 @@ public class DoRequestFragment extends Fragment implements OnClickListener{
 
         @Override
         protected Void doInBackground(Object... strings) {
-            UserSessionManager session = new UserSessionManager(getActivity());
-            session.getUserDetails();
-            Map<String, String> user = session.getUserDetails();
-            name = user.get(UserSessionManager.KEY_USERNAME);
+            String user = (String) strings[0];
+            Integer idRequestType = (Integer) strings[1];
+            String description = (String) strings[2];
 
-            postData((String) strings[0], (String) strings[1], (String) strings[2]);
-            view = (View) strings[3];
+
+            postData(user,  idRequestType, description);
+
             return null;
         }
 
         protected void onPostExecute(Void aVoid){
-            JSONArray jsonResponse;
+            JSONObject jsonResponse;
 
             try {
-                jsonResponse = new JSONArray(content);
-
-                for(int i = 0; i<jsonResponse.length();i++){
-                    JSONObject jsonObject = jsonResponse.getJSONObject(i);
-                    confirmation = new SendRequest(
-                            jsonObject.getString("status"));
-                    }
-
-                confirmationList.add(confirmation);
-
+                jsonResponse = new JSONObject(content);
+                if (jsonResponse != null) {
+                    String respuesta = jsonResponse.getString("status");
+                    if (respuesta.equals("Created"))
+                       Toast.makeText(getActivity(),"Solicitud enviada exitosamente", Toast.LENGTH_LONG).show();
+                    dialogo.hide();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
+                dialogo.hide();
             }
-
-
-
         }
 
-
-
-        private void postData(String name, String idRequest, String description) {
+        private void postData(String name, int idRequest, String description) {
             URL url = null;
 
             try {
@@ -346,10 +323,6 @@ public class DoRequestFragment extends Fragment implements OnClickListener{
             }
                 return stringBuilder.toString();
         }
-
-
-
-
     }
 }
 

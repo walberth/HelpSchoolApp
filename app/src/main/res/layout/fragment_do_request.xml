@@ -6,26 +6,32 @@
     tools:context="com.moviles.utp.helpschoolapp.ui.fragment.DoRequestFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="382dp"
         android:layout_height="match_parent"
-        android:paddingTop="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_horizontal_margin"
+        android:paddingRight="@dimen/padding_horizontal_margin"
+        android:paddingBottom="@dimen/bottombar_height"
+        android:paddingTop="30dp">
 
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_horizontal_margin"
-            android:text="@string/select_request" />
+            android:text="@string/select_request"
+            android:textSize="25sp" />
+
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_horizontal_margin"/>
+            android:padding="@dimen/padding_horizontal_margin" />
 
         <EditText
             android:id="@+id/detail_request"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="182dp"
             android:layout_marginBottom="@dimen/bottombar_height"
             android:layout_marginLeft="@dimen/padding_horizontal_margin"
             android:layout_marginRight="@dimen/padding_horizontal_margin"
@@ -36,8 +42,7 @@
             android:id="@+id/sendRequest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottombar_height"
-            android:text="enviar"/>
+            android:text="enviar" />
 
 
     </LinearLayout>

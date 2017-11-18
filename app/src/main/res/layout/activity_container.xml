@@ -14,5 +14,6 @@
 </FrameLayout>
 
     <include layout="@layout/bottombar"/>
+    <include layout="@layout/bottombar_directive"/>
 
 </RelativeLayout>

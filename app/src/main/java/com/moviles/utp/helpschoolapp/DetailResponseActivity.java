@@ -84,17 +84,24 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                         try {
                             Log.d(TAG, "onResponse: " + response.toString());
                             JSONObject jsonResponse = new JSONObject(response.toString());
+                            Log.d(TAG, String.valueOf(jsonResponse));
                             mDetailResponse = new DetailResponse(
                                     jsonResponse.optString("status"),
                                     jsonResponse.optString("idRequestType"),
-                                    Dates.convertTimestampToFormatLocalDate(jsonResponse.optString("timeStampCReq"), FormatDate.getDateFormatLocaleUntilSeconds()),
-                                    jsonResponse.optString("descriptionResponseRequest")
+                                    jsonResponse.optString("timeStampCReq"),
+                                    jsonResponse.getString("descriptionRequest")
+                                    /*(jsonResponse.optString("descriptionResponseRequest").equals(""))
+                                    ? jsonResponse.optString("description")
+                                            : jsonResponse.optString("descriptionResponseRequest")*/
+
+
+
                             );
 
-                            /*Log.d(TAG, "onResponse: status " + mDetailResponse.getStatus());
+                            Log.d(TAG, "onResponse: status " + mDetailResponse.getStatus());
                             Log.d(TAG, "onResponse: request " + mDetailResponse.getRequestType());
                             Log.d(TAG, "onResponse: dateTime " + mDetailResponse.getDateTime());
-                            Log.d(TAG, "onResponse: description " + mDetailResponse.getDescription());*/
+                            Log.d(TAG, "onResponse: description " + mDetailResponse.getDescription());
 
                             txtStatusRequest.setText(mDetailResponse.getStatus());
                             txtRequestDetail.setText(mDetailResponse.getRequestType());

@@ -6,8 +6,13 @@
         barColorWhenSelected ="@color/colorPrimary"
         icon="@drawable/profile"/>
     <tab
-        id="@+id/respond_request"
+        id="@+id/list_request_directive"
         title="@string/respond_request"
         barColorWhenSelected ="@color/colorPrimary"
         icon="@drawable/submit_response"/>
+    <tab
+        id="@+id/historical_directive"
+        title="Historial"
+        barColorWhenSelected ="@color/colorPrimary"
+        icon="@drawable/historical"/>
 </tabs>

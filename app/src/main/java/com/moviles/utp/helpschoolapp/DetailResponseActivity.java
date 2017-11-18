@@ -18,7 +18,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.moviles.utp.helpschoolapp.data.model.DetailResponse;
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 import com.moviles.utp.helpschoolapp.helper.controller.VolleyController;
+import com.moviles.utp.helpschoolapp.helper.utils.Dates;
+import com.moviles.utp.helpschoolapp.helper.utils.FormatDate;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +65,7 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
         btnSendResponse.setOnClickListener(this);
 
         getDetailResponse(URL_WS);
-        ShowToolbar("",true);
+        ShowToolbar("", true);
     }
 
     @Override
@@ -84,7 +87,7 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                             mDetailResponse = new DetailResponse(
                                     jsonResponse.optString("status"),
                                     jsonResponse.optString("idRequestType"),
-                                    jsonResponse.optString("timeStampCReq"),
+                                    Dates.convertTimestampToFormatLocalDate(jsonResponse.optString("timeStampCReq"), FormatDate.getDateFormatLocaleUntilSeconds()),
                                     jsonResponse.optString("descriptionResponseRequest")
                             );
 
@@ -173,5 +176,27 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
     public void ShowToolbar(String title, boolean upButton) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Respuesta de Solicitud");
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
     }
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, ContainerActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
 }

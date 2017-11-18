@@ -48,7 +48,7 @@ public class ListRequestAdapterRecyclerView extends RecyclerView.Adapter<ListReq
         private TextView labelRequest;
         private TextView status;
         private TextView textViewOptions;
-        private CardView cardListRequest;
+        public CardView cardListRequest;
 
         public ListRequestViewHolder(View itemView) {
             super(itemView);
@@ -121,5 +121,11 @@ public class ListRequestAdapterRecyclerView extends RecyclerView.Adapter<ListReq
     @Override
     public int getItemCount() {
         return listPendingRequestResponse.size();
+    }
+
+    public Integer removeItem(int position){
+        PendingRequestResponse pending = listPendingRequestResponse.get(position);
+        listPendingRequestResponse.remove(pending);
+        return Integer.parseInt(pending.getIdRequest());
     }
 }

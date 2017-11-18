@@ -14,4 +14,5 @@
     <color name="backgroundText">#8a262020</color>
     <color name="backgroundProfileText">#BFD1D9</color>
     <color name="backgroundEventsCardView">#DDE8ED</color>
+    <color name="colorWhite3">#CCDEE6</color>
 </resources>

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,16 +19,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.moviles.utp.helpschoolapp.ContainerActivity;
 import com.moviles.utp.helpschoolapp.R;
 import com.moviles.utp.helpschoolapp.data.model.PendingRequestResponse;
 import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 import com.moviles.utp.helpschoolapp.helper.Enum.ProfileEnum;
+import com.moviles.utp.helpschoolapp.helper.controller.VolleyController;
 import com.moviles.utp.helpschoolapp.helper.utils.Dates;
 import com.moviles.utp.helpschoolapp.helper.utils.FormatDate;
 import com.moviles.utp.helpschoolapp.ui.adapter.ListRequestAdapterRecyclerView;
+import com.moviles.utp.helpschoolapp.ui.adapter.RecyclerItemTouchHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -39,15 +47,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 
-public class ListRequestFragment extends Fragment {
+public class ListRequestFragment extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     private static final String TAG = "PendingResponseActivity";
     private static final String URL_WS = "http://wshelpdeskutp.azurewebsites.net/listRequest/";
+    private static final String URL_WS_REMOVE = "http://wshelpdeskutp.azurewebsites.net/removeReqBAppl/";
 
     UserResponse userResponse = ContainerActivity.userResponse;
 
@@ -55,6 +69,9 @@ public class ListRequestFragment extends Fragment {
     private String profileType = userResponse.getProfile();
     private String type = "";
     private View mView;
+    private ProgressDialog dialog;
+    private ListRequestAdapterRecyclerView listRequestAdapterRecyclerView;
+    private ItemTouchHelper.SimpleCallback itemTouchHelperCallback;
 
     public ListRequestFragment() {
     }
@@ -74,8 +91,17 @@ public class ListRequestFragment extends Fragment {
         new GetPendingResponse().execute(username, type, mView);
 
         ShowToolbar("", false, mView);
-
+        itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         return mView;
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof ListRequestAdapterRecyclerView.ListRequestViewHolder) {
+            Integer id = listRequestAdapterRecyclerView.removeItem(position);
+            listRequestAdapterRecyclerView.notifyDataSetChanged();
+            deleteRequest(URL_WS_REMOVE, id);
+        }
     }
 
     private class GetPendingResponse extends AsyncTask<Object, Void, Void> {
@@ -143,9 +169,12 @@ public class ListRequestFragment extends Fragment {
                     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     listRequestRecycler.setLayoutManager(linearLayoutManager);
 
-                    ListRequestAdapterRecyclerView listRequestAdapterRecyclerView =
+                    listRequestAdapterRecyclerView =
                             new ListRequestAdapterRecyclerView(pendingRequestResponseList, R.layout.cardview_pending_response, getActivity());
                     listRequestRecycler.setAdapter(listRequestAdapterRecyclerView);
+
+
+                    new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(listRequestRecycler);
 
                 } else {
                     dialog.dismiss();
@@ -234,6 +263,53 @@ public class ListRequestFragment extends Fragment {
         }
     }
 
+    private void deleteRequest(String url, final Integer id) {
+        //showDialog();
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d(TAG, "Response 1: " + response.toString());
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("Removed")) {
+                        final android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(getContext()).create();
+                        alertDialog.setMessage("Solicitud se ha eliminado correctamente.");
+                        alertDialog.setCancelable(true);
+                        alertDialog.show();
+                        final Timer timer2 = new Timer();
+                        timer2.schedule(new TimerTask() {
+                            public void run() {
+                                alertDialog.dismiss();
+                                timer2.cancel();
+                            }
+                        }, 2000);
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+                //hideDialog();
+            }
+        },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Error: " + error.getMessage());
+                        //hideDialog();
+                    }
+                }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("vId", id.toString());
+                return params;
+            }
+        };
+        //Agrega request a cola de request por Volley
+        VolleyController.getInstance(getContext()).addToRequestQueue(request);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.d(TAG, "onCreateOptionsMenu: start");
@@ -274,5 +350,18 @@ public class ListRequestFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("Listado de solicitudes");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+    }
+
+    private void showDialog() {
+        if (!dialog.isShowing()) {
+            dialog.setMessage("Espere por favor...");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+    }
+
+    private void hideDialog() {
+        if (dialog.isShowing())
+            dialog.dismiss();
     }
 }

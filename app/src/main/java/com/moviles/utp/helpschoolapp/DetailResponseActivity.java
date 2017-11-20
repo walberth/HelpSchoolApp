@@ -20,6 +20,8 @@ import com.moviles.utp.helpschoolapp.data.model.UserResponse;
 import com.moviles.utp.helpschoolapp.helper.controller.VolleyController;
 import com.moviles.utp.helpschoolapp.helper.utils.Dates;
 import com.moviles.utp.helpschoolapp.helper.utils.FormatDate;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -64,8 +66,17 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
         btnSendResponse = (Button) findViewById(R.id.btnSendResponse);
         btnSendResponse.setOnClickListener(this);
 
-        getDetailResponse(URL_WS);
+        //getDetailResponse(URL_WS)
+        wsCallback();
+
+        //Log.d(TAG, "onCreate: status " + mDetailResponse.getStatus());
+        //Log.d(TAG, "onCreate: requestType " + mDetailResponse.getRequestType());
+
         ShowToolbar("", true);
+    }
+
+    public interface VolleyCallback{
+        void onSuccessResponse(String result);
     }
 
     @Override
@@ -73,18 +84,15 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
         sendResponse(URL_WS_SEND);
     }
 
-    private void getDetailResponse(String url) {
+    public void wsCallback(){
         dialog.setMessage("Espere Por favor..");
         dialog.show();
-
-        StringRequest request = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        getDetailResponse(URL_WS,
+                new DetailResponseActivity.VolleyCallback(){
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            Log.d(TAG, "onResponse: " + response.toString());
-                            JSONObject jsonResponse = new JSONObject(response.toString());
-                            Log.d(TAG, String.valueOf(jsonResponse));
+                    public void onSuccessResponse(String result) {
+                        try{
+                            JSONObject jsonResponse = new JSONObject(result.toString());
                             mDetailResponse = new DetailResponse(
                                     jsonResponse.optString("status"),
                                     jsonResponse.optString("idRequestType"),
@@ -93,22 +101,57 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                                     /*(jsonResponse.optString("descriptionResponseRequest").equals(""))
                                     ? jsonResponse.optString("description")
                                             : jsonResponse.optString("descriptionResponseRequest")*/
-
-
-
-                            );
-
-                            Log.d(TAG, "onResponse: status " + mDetailResponse.getStatus());
-                            Log.d(TAG, "onResponse: request " + mDetailResponse.getRequestType());
-                            Log.d(TAG, "onResponse: dateTime " + mDetailResponse.getDateTime());
-                            Log.d(TAG, "onResponse: description " + mDetailResponse.getDescription());
+                           );
 
                             txtStatusRequest.setText(mDetailResponse.getStatus());
                             txtRequestDetail.setText(mDetailResponse.getRequestType());
                             txtFechaDetail.setText(mDetailResponse.getDateTime());
                             txtDetailResponse.setText(mDetailResponse.getDescription());
-
                             dialog.hide();
+                        } catch (JSONException ex) {
+                            dialog.hide();
+                            Log.e(TAG, "onSuccessResponse: error " + ex.getMessage());
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void getDetailResponse(String url, final VolleyCallback callback) {
+
+
+        //Object queue = VolleyController.getInstance(DetailResponseActivity.this).getRequestQueue();
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            callback.onSuccessResponse(response);
+//                            Log.d(TAG, "onResponse: " + response.toString());
+//                            JSONObject jsonResponse = new JSONObject(response.toString());
+//                            Log.d(TAG, String.valueOf(jsonResponse));
+//                            mDetailResponse = new DetailResponse(
+//                                    jsonResponse.optString("status"),
+//                                    jsonResponse.optString("idRequestType"),
+//                                    jsonResponse.optString("timeStampCReq"),
+//                                    jsonResponse.getString("descriptionRequest")
+//                                    /*(jsonResponse.optString("descriptionResponseRequest").equals(""))
+//                                    ? jsonResponse.optString("description")
+//                                            : jsonResponse.optString("descriptionResponseRequest")*/
+//                            );
+//
+//                            Log.d(TAG, "onResponse: status " + mDetailResponse.getStatus());
+//                            Log.d(TAG, "onResponse: request " + mDetailResponse.getRequestType());
+//                            Log.d(TAG, "onResponse: dateTime " + mDetailResponse.getDateTime());
+//                            Log.d(TAG, "onResponse: description " + mDetailResponse.getDescription());
+//
+//                            txtStatusRequest.setText(mDetailResponse.getStatus());
+//                            txtRequestDetail.setText(mDetailResponse.getRequestType());
+//                            txtFechaDetail.setText(mDetailResponse.getDateTime());
+//                            txtDetailResponse.setText(mDetailResponse.getDescription());
+//
+//                            dialog.hide();
                         } catch (Exception ex) {
                             Log.e(TAG, "onResponse: error throw " + ex.getMessage());
                             ex.printStackTrace();
@@ -119,7 +162,7 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, "onErrorResponse: error throw " + error.getMessage());
-                        dialog.hide();
+                        //dialog.hide();
                     }
                 }) {
             @Override

@@ -33,10 +33,14 @@ public class ContainerActivity extends AppCompatActivity {
 
         if(userResponse.getProfile().equals("DIRECTIVO")){
             BottomBar bottomBarDirective = (BottomBar) findViewById(R.id.bottombar_directive);
+
             BottomBar bottomBar = (BottomBar) findViewById(R.id.bottombar);
+
             bottomBar.setVisibility(View.GONE);
+
             Log.d(TAG,"Bottombar" + bottomBarDirective);
             //bottomBarDirective.setDefaultTab(R.id.profile);
+
             bottomBarDirective.setOnTabSelectListener(new OnTabSelectListener() {
                 @Override
                 public void onTabSelected(int tabId) {

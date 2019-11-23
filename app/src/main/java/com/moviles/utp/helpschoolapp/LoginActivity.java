@@ -79,8 +79,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (isOk) {
             usernameWrap.setErrorEnabled(false);
             passwordWrap.setErrorEnabled(false);
-            new LoginAction().execute(usernameWrap.getEditText().getText().toString(),
-                    passwordWrap.getEditText().getText().toString());
+            //new LoginAction().execute(usernameWrap.getEditText().getText().toString(), passwordWrap.getEditText().getText().toString());
+
+            Intent intent = new Intent(getApplicationContext(), ContainerActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         } else {
             if (component != null) {
                 component.requestFocus();

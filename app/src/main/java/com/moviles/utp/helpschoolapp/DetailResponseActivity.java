@@ -165,6 +165,7 @@ public class DetailResponseActivity extends AppCompatActivity implements View.On
                         //dialog.hide();
                     }
                 }) {
+
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
